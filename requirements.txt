@@ -1,0 +1,5 @@
+PyYAML
+prometheus-client==0.14.1
+PyYAML==6.0
+requests==2.25.0
+
