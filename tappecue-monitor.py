@@ -1,3 +1,4 @@
+from logging import exception
 import yaml
 import sys
 import requests
@@ -7,7 +8,7 @@ import time
 from prometheus_client.core import Gauge, Info
 from prometheus_client import start_http_server
 
-conf_file = '/config/config.yaml'
+conf_file = 'config.yaml'
 # conf_file = 'tappecue/config.yaml'
 now = datetime.now()
 
@@ -16,7 +17,7 @@ def load_vars(conf_file):
     with open(conf_file, 'r') as c:
         config_vars = yaml.safe_load(c)
     c.close()
-    sys.stdout.write('Loaded config file')
+    sys.stdout.write('Loaded config file \n\n')
     return config_vars
 
 # Authenticate to Tappecue API
@@ -30,10 +31,14 @@ def authenticate (u, p):
         response = requests.post(url = url, data = data)
         # return response.text
         token = json.loads(response.text)
-        sys.stdout.write('Authenticated to Tappecue API')
-        return token
+        if response.status_code == 200:
+            sys.stdout.write('Authenticated to Tappecue API \n\n')
+            return token
+        else:
+            raise Exception(response.status_code)
+
     except:
-        sys.stdout.write('Tappecue API authentication failed!')
+        sys.stdout.write('Tappecue API authentication failed! \n\n')
         raise Exception(response.text)
 
 # Returns any active Tappecue sessions
@@ -94,7 +99,7 @@ def get_data(token):
                 pdata = getProbeData(token, id)
                 metrics.update(normalize_data(id, name, pdata))
     sys.stdout.write('Got probe data')
-    sys.stdout.write(str(metrics))
+    sys.stdout.write(str(metrics) + ' \n\n')
     return metrics
 
 def create_gauges(d):
@@ -128,7 +133,7 @@ def update_gauges(metrics):
                 p4_gauge[1].set(pd[p]['max_temp'])
                 p4_gauge[2].set(pd[p]['min_temp'])
                 p4_gauge[3].info({'Probe ID': '4', 'Probe Label': pd[p]['name']})
-        sys.stdout.write('Successfully updated Grafana')
+        sys.stdout.write('Successfully updated Grafana \n\n')
         time.sleep(t)
         return metrics
     else:

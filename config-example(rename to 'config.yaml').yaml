@@ -1,5 +1,5 @@
 ---
 tappecue_api_url: 'https://tappecue.babyvelociraptor.com'
-tappecue_user: 'someuser@user.com'
+tappecue_user: 'someuser@someuser.com'
 tappecue_password: '123456'
 check_probe_delay: 3
