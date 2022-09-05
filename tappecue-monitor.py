@@ -102,12 +102,13 @@ def get_data(token):
     sys.stdout.write(str(metrics) + ' \n\n')
     return metrics
 
+# TODO Add Info metric for what is cooking.
 def create_gauges(d):
     ct = Gauge('probe%s_curr_temp' % d, 'Probe %s - Current Temperature' % d)
     max_t = Gauge('probe%s_max_temp' % d, 'Probe %s - Maximum Temperature' % d)
     min_t = Gauge('probe%s_min_temp' % d, 'Probe %s - Minimum Temperature' % d)
-    name = Info('probe%s_name' % d, 'Probe %s - Cook Info')
-    return(ct, max_t, min_t, name)
+    # name = Info('probe%s_name' % d, 'Probe %s - Cook Info')
+    return(ct, max_t, min_t)#, name)
 
 def update_gauges(metrics):
     if metrics:
@@ -117,22 +118,22 @@ def update_gauges(metrics):
                 p1_gauge[0].set(pd[p]['current_temp'])
                 p1_gauge[1].set(pd[p]['max_temp'])
                 p1_gauge[2].set(pd[p]['min_temp'])
-                p1_gauge[3].info({'Probe ID': '1', 'Probe Label': pd[p]['name']})
+                # p1_gauge[3].info({'Probe ID': '1', 'Probe Label': pd[p]['name']})
             elif p == '2':
                 p2_gauge[0].set(pd[p]['current_temp'])
                 p2_gauge[1].set(pd[p]['max_temp'])
                 p2_gauge[2].set(pd[p]['min_temp'])
-                p2_gauge[3].info({'Probe ID': '2', 'Probe Label': pd[p]['name']})
+                # p2_gauge[3].info({'Probe ID': '2', 'Probe Label': pd[p]['name']})
             elif p == '3':
                 p3_gauge[0].set(pd[p]['current_temp'])
                 p3_gauge[1].set(pd[p]['max_temp'])
                 p3_gauge[2].set(pd[p]['min_temp'])
-                p3_gauge[3].info({'Probe ID': '3', 'Probe Label': pd[p]['name']})
+                # p3_gauge[3].info({'Probe ID': '3', 'Probe Label': pd[p]['name']})
             elif p == '4':
                 p4_gauge[0].set(pd[p]['current_temp'])
                 p4_gauge[1].set(pd[p]['max_temp'])
                 p4_gauge[2].set(pd[p]['min_temp'])
-                p4_gauge[3].info({'Probe ID': '4', 'Probe Label': pd[p]['name']})
+                # p4_gauge[3].info({'Probe ID': '4', 'Probe Label': pd[p]['name']})
         sys.stdout.write('Successfully updated Grafana \n\n')
         time.sleep(t)
         return metrics
