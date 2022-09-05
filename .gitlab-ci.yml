@@ -14,5 +14,4 @@ docker_build:
     - docker version
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker buildx create --use
-    - docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --pull --rm -f "Dockerfile" --tag $CI_REGISTRY_IMAGE:latest "."
-    - docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --tag $CI_REGISTRY_IMAGE:latest
+    - docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --pull --rm -f "Dockerfile" --tag $CI_REGISTRY_IMAGE:latest "."
