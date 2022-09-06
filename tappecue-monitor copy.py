@@ -17,7 +17,7 @@ def load_vars(conf_file):
     with open(conf_file, 'r') as c:
         config_vars = yaml.safe_load(c)
     c.close()
-    messages('Loaded config file \n\n')
+    sys.stdout.write('Loaded config file \n\n')
     return config_vars
 
 # Authenticate to Tappecue API
@@ -32,13 +32,13 @@ def authenticate (u, p):
         # return response.text
         token = json.loads(response.text)
         if response.status_code == 200:
-            messages('Authenticated to Tappecue API \n\n')
+            sys.stdout.write('Authenticated to Tappecue API \n\n')
             return token
         else:
             raise Exception(response.status_code)
 
     except:
-        messages('Tappecue API authentication failed! \n\n')
+        sys.stdout.write('Tappecue API authentication failed! \n\n')
         raise Exception(response.text)
 
 # Returns any active Tappecue sessions
@@ -98,8 +98,8 @@ def get_data(token):
                 name = s['name']
                 pdata = getProbeData(token, id)
                 metrics.update(normalize_data(id, name, pdata))
-        messages('Got probe data')
-        messages(str(metrics))
+        sys.stdout.write('Got probe data')
+        sys.stdout.write(str(metrics) + ' \n\n')
         return metrics
 
 # TODO Add Info metric for what is cooking.
@@ -134,15 +134,11 @@ def update_gauges(metrics):
                 p4_gauge[1].set(pd[p]['max_temp'])
                 p4_gauge[2].set(pd[p]['min_temp'])
                 # p4_gauge[3].info(str({'Probe ID': '4', 'Probe Label': pd[p]['name']}))
-        messages('Successfully updated Grafana.  Sleeping for %s seconds.' % t)
+        sys.stdout.write('Successfully updated Grafana \n\n')
         time.sleep(t)
         return metrics
     else:
-        messages('No active sessions found.  Will check again in %s seconds.' % config['no_session_delay'])
         time.sleep(config['no_session_delay'])
-
-def messages(m):
-    sys.stdout.write(str(now) + ': %s \n' % m)
 
 if __name__ == "__main__":
     token = None
