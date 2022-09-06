@@ -1,4 +1,5 @@
 from logging import exception
+from telnetlib import GA
 import yaml
 import sys
 import requests
@@ -103,37 +104,41 @@ def get_data(token):
         return metrics
 
 def create_gauges(d):
-    ct = Gauge('probe%s_curr_temp' % d, 'Probe %s - Current Temperature' % d)
-    max_t = Gauge('probe%s_max_temp' % d, 'Probe %s - Maximum Temperature' % d)
-    min_t = Gauge('probe%s_min_temp' % d, 'Probe %s - Minimum Temperature' % d)
-    name = Info('probe%s_name' % d, 'Probe %s - Cook Info' % d)
-    return(ct, max_t, min_t, name)
+    # g = Gauge('temps', 'all probe temperatures', ['max_temp', 'min_temp', 'curr_temp', 'name'], )
+    ct = Gauge('probe%s_curr_temp' % d, 'Probe %s - Current Temperature' % d, ['name'])
+    max_t = Gauge('probe%s_max_temp' % d, 'Probe %s - Maximum Temperature' % d, ['name'])
+    min_t = Gauge('probe%s_min_temp' % d, 'Probe %s - Minimum Temperature' % d, ['name'])
+    # name = Info('probe%s_name' % d, 'Probe %s - Cook Info' % d)
+    return(ct, max_t, min_t)#)
 
 # TODO create unit test using promtool.  Will need a test set of Tappecue data to use.
 def update_gauges(metrics):
     if metrics:
         pd = metrics['probes']
         for p in pd:
+            labels = {
+                "name": pd[p]['name'],
+            }
             if p == '1':
-                p1_gauge[0].set(pd[p]['current_temp'])
-                p1_gauge[1].set(pd[p]['max_temp'])
-                p1_gauge[2].set(pd[p]['min_temp'])
-                p1_gauge[3].info({'probe_id': '1', 'probe_label': pd[p]['name']})
+                p1_gauge[0].labels(labels['name']).set(pd[p]['current_temp'])
+                p1_gauge[1].labels(labels['name']).set(pd[p]['max_temp'])
+                p1_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
+                # p1_gauge[3].info({'probe_id': '1', 'probe_label': pd[p]['name']})
             elif p == '2':
-                p2_gauge[0].set(pd[p]['current_temp'])
-                p2_gauge[1].set(pd[p]['max_temp'])
-                p2_gauge[2].set(pd[p]['min_temp'])
-                p2_gauge[3].info({'probe_id': '2', 'probe_label': pd[p]['name']})
+                p2_gauge[0].labels(labels['name']).set(pd[p]['current_temp'])
+                p2_gauge[1].labels(labels['name']).set(pd[p]['max_temp'])
+                p2_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
+                # p2_gauge[3].info({'probe_id': '2', 'probe_label': pd[p]['name']})
             elif p == '3':
-                p3_gauge[0].set(pd[p]['current_temp'])
-                p3_gauge[1].set(pd[p]['max_temp'])
-                p3_gauge[2].set(pd[p]['min_temp'])
-                p3_gauge[3].info({'probe_id': '3', 'probe_label': pd[p]['name']})
+                p3_gauge[0].labels(pd[p]['name']).set(pd[p]['current_temp'])
+                p3_gauge[1].labels(labels['name']).set(pd[p]['max_temp'])
+                p3_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
+                # p3_gauge[3].info({'probe_id': '3', 'probe_label': pd[p]['name']})
             elif p == '4':
-                p4_gauge[0].set(pd[p]['current_temp'])
-                p4_gauge[1].set(pd[p]['max_temp'])
-                p4_gauge[2].set(pd[p]['min_temp'])
-                p4_gauge[3].info({'probe_id': '4', 'probe_label': pd[p]['name']})
+                p4_gauge[0].labels(labels['name']).set(pd[p]['current_temp'])
+                p4_gauge[1].labels(labels['name']).set(pd[p]['max_temp'])
+                p4_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
+                # p4_gauge[3].info({'probe_id': '4', 'probe_label': pd[p]['name']})
         messages('Successfully updated Grafana.  Sleeping for %s seconds.' % t)
         time.sleep(t)
         return metrics
