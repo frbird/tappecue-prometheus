@@ -9,7 +9,6 @@ from prometheus_client import Gauge, Info
 from prometheus_client import start_http_server
 
 conf_file = 'config.yaml'
-# conf_file = 'tappecue/config.yaml'
 now = datetime.now()
 
 # Loads variable from the YAML config file.  This is currently looing for tappecue_config.yaml
@@ -103,7 +102,6 @@ def get_data(token):
         messages(str(metrics))
         return metrics
 
-# TODO Add Info metric for what is cooking.
 def create_gauges(d):
     ct = Gauge('probe%s_curr_temp' % d, 'Probe %s - Current Temperature' % d)
     max_t = Gauge('probe%s_max_temp' % d, 'Probe %s - Maximum Temperature' % d)
@@ -111,6 +109,7 @@ def create_gauges(d):
     name = Info('probe%s_name' % d, 'Probe %s - Cook Info' % d)
     return(ct, max_t, min_t, name)
 
+# TODO create unit test using promtool.  Will need a test set of Tappecue data to use.
 def update_gauges(metrics):
     if metrics:
         pd = metrics['probes']
