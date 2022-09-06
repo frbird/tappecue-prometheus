@@ -17,7 +17,7 @@ def load_vars(conf_file):
     with open(conf_file, 'r') as c:
         config_vars = yaml.safe_load(c)
     c.close()
-    messages('Loaded config file.')
+    sys.stdout.write('Loaded config file \n\n')
     return config_vars
 
 # Authenticate to Tappecue API
@@ -32,14 +32,13 @@ def authenticate (u, p):
         # return response.text
         token = json.loads(response.text)
         if response.status_code == 200:
-            messages('Authenticated to Tappecue API')
+            sys.stdout.write('Authenticated to Tappecue API \n\n')
             return token
         else:
-            messages('error: Authentication failed!')
             raise Exception(response.status_code)
 
     except:
-        messages('Tappecue API authentication failed! \n\n')
+        sys.stdout.write('Tappecue API authentication failed! \n\n')
         raise Exception(response.text)
 
 # Returns any active Tappecue sessions
@@ -99,8 +98,8 @@ def get_data(token):
                 name = s['name']
                 pdata = getProbeData(token, id)
                 metrics.update(normalize_data(id, name, pdata))
-        messages('Got probe data')
-        messages(str(metrics))
+        sys.stdout.write('Got probe data')
+        sys.stdout.write(str(metrics) + ' \n\n')
         return metrics
 
 # TODO Add Info metric for what is cooking.
@@ -108,8 +107,8 @@ def create_gauges(d):
     ct = Gauge('probe%s_curr_temp' % d, 'Probe %s - Current Temperature' % d)
     max_t = Gauge('probe%s_max_temp' % d, 'Probe %s - Maximum Temperature' % d)
     min_t = Gauge('probe%s_min_temp' % d, 'Probe %s - Minimum Temperature' % d)
-    name = Info('probe%s_name' % d, 'Probe %s - Cook Info' % d)
-    return(ct, max_t, min_t, name)
+    # name = Info('probe%s_name' % d, 'Probe %s - Cook Info')
+    return(ct, max_t, min_t)#, name)
 
 def update_gauges(metrics):
     if metrics:
@@ -119,31 +118,27 @@ def update_gauges(metrics):
                 p1_gauge[0].set(pd[p]['current_temp'])
                 p1_gauge[1].set(pd[p]['max_temp'])
                 p1_gauge[2].set(pd[p]['min_temp'])
-                p1_gauge[3].info({'Probe ID': '1', 'Probe Label': pd[p]['name']})
+                # p1_gauge[3].info(str({'Probe ID': '1', 'Probe Label': pd[p]['name']}))
             elif p == '2':
                 p2_gauge[0].set(pd[p]['current_temp'])
                 p2_gauge[1].set(pd[p]['max_temp'])
                 p2_gauge[2].set(pd[p]['min_temp'])
-                p2_gauge[3].info({'Probe ID': '2', 'Probe Label': pd[p]['name']})
+                # p2_gauge[3].info(str({'Probe ID': '2', 'Probe Label': pd[p]['name']}))
             elif p == '3':
                 p3_gauge[0].set(pd[p]['current_temp'])
                 p3_gauge[1].set(pd[p]['max_temp'])
                 p3_gauge[2].set(pd[p]['min_temp'])
-                p3_gauge[3].info({'Probe ID': '3', 'Probe Label': pd[p]['name']})
+                # p3_gauge[3].info(str({'Probe ID': '3', 'Probe Label': pd[p]['name']}))
             elif p == '4':
                 p4_gauge[0].set(pd[p]['current_temp'])
                 p4_gauge[1].set(pd[p]['max_temp'])
                 p4_gauge[2].set(pd[p]['min_temp'])
-                p4_gauge[3].info({'Probe ID': '4', 'Probe Label': pd[p]['name']})
-        messages('Successfully updated Grafana.  Sleeping for %s seconds.' % t)
+                # p4_gauge[3].info(str({'Probe ID': '4', 'Probe Label': pd[p]['name']}))
+        sys.stdout.write('Successfully updated Grafana \n\n')
         time.sleep(t)
         return metrics
     else:
-        messages('No active sessions found.  Will check again in %s seconds.' % config['no_session_delay'])
         time.sleep(config['no_session_delay'])
-
-def messages(m):
-    sys.stdout.write(str(now) + ': %s \n' % m)
 
 if __name__ == "__main__":
     token = None
