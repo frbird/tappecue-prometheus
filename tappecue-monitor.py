@@ -140,11 +140,19 @@ def update_gauges(metrics):
                 p4_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
                 # p4_gauge[3].info({'probe_id': '4', 'probe_label': pd[p]['name']})
         messages('Successfully updated Grafana.  Sleeping for %s seconds.' % t)
-        time.sleep(t)
+        # Delay metrics retrieval for 't' seconds if that var is defined.  If not delay for 30 seconds.
+        if t:
+            time.sleep(t)
+        else:
+            time.sleep(30)
         return metrics
     else:
         messages('No active sessions found.  Will check again in %s seconds.' % config['no_session_delay'])
-        time.sleep(config['no_session_delay'])
+        # Wait for a period of time before checking for an active session.  Default is 300 seconds (5 minutes).
+        if NO_SESSION_DELAY:
+            time.sleep(NO_SESSION_DELAY)
+        else:
+            time.sleep(300)
 
 def messages(m):
     sys.stdout.write(str(now) + ': %s \n' % m)
@@ -157,6 +165,8 @@ if __name__ == "__main__":
     BASE_URL = config['tappecue_api_url']
     # Time in seconds between temp checks.
     t = config['check_probe_delay']
+    NO_SESSION_DELAY = config['no_session_delay']
+
     start_http_server(8000)
     while True:
         if not token:
