@@ -10,7 +10,7 @@ from prometheus_client import Gauge, Info
 from prometheus_client import start_http_server
 
 conf_file = 'config.yaml'
-now = datetime.now()
+
 
 # Loads variable from the YAML config file.  This is currently looing for tappecue_config.yaml
 def load_vars(conf_file):
@@ -91,6 +91,7 @@ def normalize_data(sess_id, sess_name, pdata):
 
 # Get metrics for each active Tappecue session and return a dictionary.  Requires session data to be a global var.
 def get_data(token):
+    session = getSession(token)
     if session:
         metrics = {}
         for s in session:
@@ -102,6 +103,14 @@ def get_data(token):
         messages('Got probe data')
         messages(str(metrics))
         return metrics
+    else:
+        # Wait for a period of time before checking for an active session.  Default is 300 seconds (5 minutes).
+        if NO_SESSION_DELAY:
+            messages('No active sessions found.  Will check again in %s seconds.' % NO_SESSION_DELAY)
+            time.sleep(NO_SESSION_DELAY)
+        else:
+            messages('No active sessions found.  Will check again in %s seconds.' % '300')
+            time.sleep(300)
 
 def create_gauges(d):
     # g = Gauge('temps', 'all probe temperatures', ['max_temp', 'min_temp', 'curr_temp', 'name'], )
@@ -139,22 +148,16 @@ def update_gauges(metrics):
                 p4_gauge[1].labels(labels['name']).set(pd[p]['max_temp'])
                 p4_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
                 # p4_gauge[3].info({'probe_id': '4', 'probe_label': pd[p]['name']})
-        messages('Successfully updated Grafana.  Sleeping for %s seconds.' % t)
         # Delay metrics retrieval for 't' seconds if that var is defined.  If not delay for 30 seconds.
         if t:
+            messages('Successfully updated Grafana.  Sleeping for %s seconds.' % t)
             time.sleep(t)
         else:
+            messages('Successfully updated Grafana.  Sleeping for %s seconds.' % '30')
             time.sleep(30)
-        return metrics
-    else:
-        messages('No active sessions found.  Will check again in %s seconds.' % config['no_session_delay'])
-        # Wait for a period of time before checking for an active session.  Default is 300 seconds (5 minutes).
-        if NO_SESSION_DELAY:
-            time.sleep(NO_SESSION_DELAY)
-        else:
-            time.sleep(300)
 
 def messages(m):
+    now = datetime.now()
     sys.stdout.write(str(now) + ': %s \n' % m)
 
 if __name__ == "__main__":
@@ -171,7 +174,6 @@ if __name__ == "__main__":
     while True:
         if not token:
             token = authenticate(USER, PSWD)
-        session = getSession(token)
         try:
             p1_gauge = create_gauges('1')
             p2_gauge = create_gauges('2')
