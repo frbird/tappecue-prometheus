@@ -99,7 +99,6 @@ def get_data(token):
                 pdata = getProbeData(token, id)
                 metrics.update(normalize_data(id, name, pdata))
         messages('Got probe data')
-        messages(str(metrics))
         return metrics
     else:
         # Wait for a period of time before checking for an active session.  Default is 300 seconds (5 minutes).
@@ -148,6 +147,7 @@ def update_gauges(metrics):
                 # p4_gauge[3].info({'probe_id': '4', 'probe_label': pd[p]['name']})
         # Delay metrics retrieval for 't' seconds if that var is defined.  If not delay for 30 seconds.
         if t:
+            messages(str(metrics))
             messages('Successfully updated Grafana.  Sleeping for %s seconds.' % t)
             time.sleep(t)
         else:
