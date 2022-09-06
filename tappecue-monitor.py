@@ -16,6 +16,21 @@ def load_vars(conf_file):
     messages('Loaded config file.')
     return config_vars
 
+# requires a URL, method and depending on the method headers or data.
+def req(**kwargs):
+    if kwargs['method'] == 'post':
+        try:
+            response = s.post(url = kwargs['url'], data = kwargs['data'])
+            return response
+        except:
+            raise Exception(response.text)
+    elif kwargs['method'] == 'get':
+        try:
+            response = s.get(url = kwargs['url'], headers = kwargs['headers'])
+            return response
+        except:
+            raise Exception(response.text)
+
 # Authenticate to Tappecue API
 def authenticate (u, p):
     url = BASE_URL + "/login"
@@ -23,40 +38,29 @@ def authenticate (u, p):
         'username': u,
         'password': p
     }
-    try:
-        response = requests.post(url = url, data = data)
-        # return response.text
-        token = json.loads(response.text)
-        if response.status_code == 200:
-            messages('Authenticated to Tappecue API')
-            return token
-        else:
-            messages('error: Authentication failed!')
-            raise Exception(response.status_code)
-
-    except:
-        messages('Tappecue API authentication failed! \n\n')
-        raise Exception(response.text)
+    response = req(method='post', url=url, data=data)
+    token = json.loads(response.text)
+    if response.status_code == 200:
+        messages('Authenticated to Tappecue API')
+        return token
+    else:
+        messages('error: Authentication failed!')
+        raise Exception(response.status_code)
 
 # Returns any active Tappecue sessions
 def getSession(token):
     headers = token
     url = BASE_URL + "/sessions"
-    try:
-        response = requests.get(url = url, headers = headers)
-        return json.loads(response.text)
-    except:
-        raise Exception(response.text)
+    response = req(method='get', url=url, headers=headers)
+    return json.loads(response.text)
 
 # Pulls probe data for the given session
 def getProbeData(token, id):
     headers = token
     url = BASE_URL + "/session/" + str(id)
-    try:
-        response = requests.get(url = url, headers = headers)
-        return json.loads(response.text)
-    except:
-        raise Exception(response.text)
+    response = req(method='get', url=url, headers=headers)
+    return json.loads(response.text)
+
 
 # Flattens the data returned from Tappecue and adds session_name, session_id and probe_id to each probe data set.
 # def normalize_data(sess_id, sess_name, pdata):
@@ -179,6 +183,7 @@ if __name__ == "__main__":
     start_http_server(8000)
     while True:
         if not token:
+            s = requests.session()
             token = authenticate(USER, PSWD)
         try:
             p1_gauge = create_gauges('1')
