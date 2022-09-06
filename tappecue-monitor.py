@@ -1,14 +1,12 @@
 import yaml
 import sys
+import logging
 import requests
 import json
 from datetime import datetime
 import time
 from prometheus_client import Gauge, Info
 from prometheus_client import start_http_server
-
-conf_file = 'config.yaml'
-
 
 # Loads variable from the YAML config file.  This is currently looing for tappecue_config.yaml
 def load_vars(conf_file):
@@ -146,26 +144,36 @@ def update_gauges(metrics):
                 p4_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
                 # p4_gauge[3].info({'probe_id': '4', 'probe_label': pd[p]['name']})
         # Delay metrics retrieval for 't' seconds if that var is defined.  If not delay for 30 seconds.
-        if t:
-            messages(str(metrics))
-            messages('Successfully updated Grafana.  Sleeping for %s seconds.' % t)
-            time.sleep(t)
+        if CHECK_DELAY:
+            messages('Successfully updated Grafana.  Sleeping for %s seconds.' % CHECK_DELAY)
+            time.sleep(CHECK_DELAY)
         else:
             messages('Successfully updated Grafana.  Sleeping for %s seconds.' % '30')
             time.sleep(30)
 
 def messages(m):
-    now = datetime.now()
-    sys.stdout.write(str(now) + ': %s \n' % m)
+    # now = datetime.now()
+    # sys.stdout.write(str(now) + ': %s \n' % m)
+    file_handler = logging.FileHandler(filename='tappecue.log')
+    stdout_handler = logging.StreamHandler(stream=sys.stdout)
+    handlers = [file_handler, stdout_handler]
+    logging.basicConfig(
+        level=logging.DEBUG, 
+        format='[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s',
+        handlers=handlers
+    )
+    logger = logging.getLogger('tappecue')
+    logger.info(m)
 
 if __name__ == "__main__":
+    conf_file = 'config.yaml'
     token = None
     config = load_vars(conf_file)
     USER = config['tappecue_user']
     PSWD = config['tappecue_password']
     BASE_URL = config['tappecue_api_url']
     # Time in seconds between temp checks.
-    t = config['check_probe_delay']
+    CHECK_DELAY = config['check_probe_delay']
     NO_SESSION_DELAY = config['no_session_delay']
 
     start_http_server(8000)
@@ -180,39 +188,3 @@ if __name__ == "__main__":
         except:
             pass
         update_gauges(get_data(token))
-
-
-
-
-# # Creates data format acceptible by Graphite.
-# # TODO - Need to create real values for "interval".  Also, "tags" should be a dict.
-# def create_graphite_metrics(data):
-#     metric_list = []
-#     for d in data:
-#         if d['active'] == '1':
-#             #Convert time string to int
-#             time = datetime.strptime(d['last_update'], '%m/%d/%Y %I:%M:%S %p')
-#             metric = {
-#                 'name': d['name'] + ' - Current Temp',
-#                 'metric': d['name'] + ' - Current Temp',
-#                 "interval": 5,
-#                 'value': float(d['current_temp']),
-#                 'time': int(time.timestamp()),
-#                 'mtype': 'count',
-#                 # "tags": "probe_" + d['probe_id']
-#             }
-#             metric_list.append(metric)
-#     return metric_list
-
-# Function to write metrics to Graphite
-# def write_graphite_metrics(metrics, url, user_id, apikey):
-#     token = GRAFANA_USER + ":" + GRAFANA_APIKEY
-#     headers = CaseInsensitiveDict()
-#     headers["Accept"] = "application/json"
-#     headers["Authorization"] = "Bearer %s" % token
-
-#     # grafana_data.sort(key=lambda obj: obj['time'])
-#     result = requests.post(url, json=metrics, headers=headers)
-#     if result.status_code != 200:
-#         raise Exception(result.text)
-#     print('%s: %s' % (result.status_code, result.text))

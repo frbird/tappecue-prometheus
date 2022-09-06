@@ -1,0 +1,156 @@
+[2022-09-06 16:31:55,370] {tappecue-monitor.py:166} DEBUG - Loaded config file.
+[2022-09-06 16:31:55,481] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:31:55,711] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "POST /login HTTP/1.1" 200 56
+[2022-09-06 16:31:55,716] {tappecue-monitor.py:166} DEBUG - Authenticated to Tappecue API
+[2022-09-06 16:31:55,717] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:31:56,161] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:31:56,164] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:31:56,877] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:31:56,880] {tappecue-monitor.py:166} DEBUG - Got probe data
+[2022-09-06 16:31:56,880] {tappecue-monitor.py:166} DEBUG - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:31:59,888] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:31:59,994] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:31:59,997] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:00,100] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:32:00,102] {tappecue-monitor.py:166} DEBUG - Got probe data
+[2022-09-06 16:32:00,102] {tappecue-monitor.py:166} DEBUG - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:32:03,112] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:03,206] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:32:03,209] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:03,310] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:32:03,312] {tappecue-monitor.py:166} DEBUG - Got probe data
+[2022-09-06 16:32:03,312] {tappecue-monitor.py:166} DEBUG - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:32:06,314] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:06,410] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:32:06,413] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:06,508] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:32:06,511] {tappecue-monitor.py:166} DEBUG - Got probe data
+[2022-09-06 16:32:06,512] {tappecue-monitor.py:166} DEBUG - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:32:09,521] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:09,615] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:32:09,618] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:09,715] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:32:09,717] {tappecue-monitor.py:166} DEBUG - Got probe data
+[2022-09-06 16:32:09,717] {tappecue-monitor.py:166} DEBUG - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:32:12,723] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:12,819] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:32:12,822] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:12,931] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:32:12,949] {tappecue-monitor.py:166} DEBUG - Got probe data
+[2022-09-06 16:32:12,951] {tappecue-monitor.py:166} DEBUG - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:32:15,958] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:16,054] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:32:16,057] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:16,159] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:32:16,161] {tappecue-monitor.py:166} DEBUG - Got probe data
+[2022-09-06 16:32:16,162] {tappecue-monitor.py:166} DEBUG - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:32:19,171] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:19,266] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:32:19,269] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:32:19,360] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:32:19,362] {tappecue-monitor.py:166} DEBUG - Got probe data
+[2022-09-06 16:32:19,367] {tappecue-monitor.py:166} DEBUG - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:39:54,291] {tappecue-monitor.py:166} CRITICAL - Loaded config file.
+[2022-09-06 16:39:54,485] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:39:54,683] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "POST /login HTTP/1.1" 200 56
+[2022-09-06 16:39:54,684] {tappecue-monitor.py:166} CRITICAL - Authenticated to Tappecue API
+[2022-09-06 16:39:54,686] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:39:55,007] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:39:55,014] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:39:55,236] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:39:55,238] {tappecue-monitor.py:166} CRITICAL - Got probe data
+[2022-09-06 16:39:55,239] {tappecue-monitor.py:166} CRITICAL - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:39:58,248] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:39:58,346] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:39:58,350] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:39:58,451] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:39:58,453] {tappecue-monitor.py:166} CRITICAL - Got probe data
+[2022-09-06 16:39:58,454] {tappecue-monitor.py:166} CRITICAL - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:01,464] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:01,561] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:01,564] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:01,656] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:01,663] {tappecue-monitor.py:166} CRITICAL - Got probe data
+[2022-09-06 16:40:01,663] {tappecue-monitor.py:166} CRITICAL - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:04,673] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:04,766] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:04,768] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:04,861] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:04,863] {tappecue-monitor.py:166} CRITICAL - Got probe data
+[2022-09-06 16:40:04,863] {tappecue-monitor.py:166} CRITICAL - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:07,867] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:07,971] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:07,974] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:08,062] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:08,067] {tappecue-monitor.py:166} CRITICAL - Got probe data
+[2022-09-06 16:40:08,069] {tappecue-monitor.py:166} CRITICAL - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:11,077] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:11,183] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:11,185] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:11,278] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:11,287] {tappecue-monitor.py:166} CRITICAL - Got probe data
+[2022-09-06 16:40:11,288] {tappecue-monitor.py:166} CRITICAL - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:14,297] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:14,408] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:14,411] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:14,506] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:14,508] {tappecue-monitor.py:166} CRITICAL - Got probe data
+[2022-09-06 16:40:14,509] {tappecue-monitor.py:166} CRITICAL - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:17,516] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:17,610] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:17,612] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:17,709] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:17,710] {tappecue-monitor.py:166} CRITICAL - Got probe data
+[2022-09-06 16:40:17,711] {tappecue-monitor.py:166} CRITICAL - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:27,972] {tappecue-monitor.py:166} INFO - Loaded config file.
+[2022-09-06 16:40:28,001] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:28,109] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "POST /login HTTP/1.1" 200 56
+[2022-09-06 16:40:28,111] {tappecue-monitor.py:166} INFO - Authenticated to Tappecue API
+[2022-09-06 16:40:28,112] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:28,203] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:28,206] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:28,298] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:28,303] {tappecue-monitor.py:166} INFO - Got probe data
+[2022-09-06 16:40:28,304] {tappecue-monitor.py:166} INFO - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:31,311] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:31,413] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:31,419] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:31,509] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:31,514] {tappecue-monitor.py:166} INFO - Got probe data
+[2022-09-06 16:40:31,515] {tappecue-monitor.py:166} INFO - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:34,524] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:34,629] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:34,632] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:34,758] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:34,760] {tappecue-monitor.py:166} INFO - Got probe data
+[2022-09-06 16:40:34,760] {tappecue-monitor.py:166} INFO - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:37,771] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:37,865] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:37,868] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:37,966] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:37,968] {tappecue-monitor.py:166} INFO - Got probe data
+[2022-09-06 16:40:37,968] {tappecue-monitor.py:166} INFO - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:40,977] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:41,072] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:41,075] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:41,168] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:41,169] {tappecue-monitor.py:166} INFO - Got probe data
+[2022-09-06 16:40:41,170] {tappecue-monitor.py:166} INFO - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:44,179] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:44,273] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:44,276] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:44,367] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:44,368] {tappecue-monitor.py:166} INFO - Got probe data
+[2022-09-06 16:40:44,369] {tappecue-monitor.py:166} INFO - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:47,380] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:47,489] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:47,492] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:47,590] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:47,592] {tappecue-monitor.py:166} INFO - Got probe data
+[2022-09-06 16:40:47,596] {tappecue-monitor.py:166} INFO - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 16:40:50,601] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:50,773] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 16:40:50,780] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 16:40:50,977] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 730
+[2022-09-06 16:40:50,983] {tappecue-monitor.py:166} INFO - Got probe data
+[2022-09-06 16:40:50,983] {tappecue-monitor.py:166} INFO - Successfully updated Grafana.  Sleeping for 3 seconds.
