@@ -5,7 +5,7 @@ import requests
 import json
 from datetime import datetime
 import time
-from prometheus_client.core import Gauge, Info
+from prometheus_client import Gauge, Info
 from prometheus_client import start_http_server
 
 conf_file = 'config.yaml'
@@ -119,22 +119,22 @@ def update_gauges(metrics):
                 p1_gauge[0].set(pd[p]['current_temp'])
                 p1_gauge[1].set(pd[p]['max_temp'])
                 p1_gauge[2].set(pd[p]['min_temp'])
-                p1_gauge[3].info({'Probe ID': '1', 'Probe Label': pd[p]['name']})
+                p1_gauge[3].info({'probe_id': '1', 'probe_label': pd[p]['name']})
             elif p == '2':
                 p2_gauge[0].set(pd[p]['current_temp'])
                 p2_gauge[1].set(pd[p]['max_temp'])
                 p2_gauge[2].set(pd[p]['min_temp'])
-                p2_gauge[3].info({'Probe ID': '2', 'Probe Label': pd[p]['name']})
+                p2_gauge[3].info({'probe_id': '2', 'probe_label': pd[p]['name']})
             elif p == '3':
                 p3_gauge[0].set(pd[p]['current_temp'])
                 p3_gauge[1].set(pd[p]['max_temp'])
                 p3_gauge[2].set(pd[p]['min_temp'])
-                p3_gauge[3].info({'Probe ID': '3', 'Probe Label': pd[p]['name']})
+                p3_gauge[3].info({'probe_id': '3', 'probe_label': pd[p]['name']})
             elif p == '4':
                 p4_gauge[0].set(pd[p]['current_temp'])
                 p4_gauge[1].set(pd[p]['max_temp'])
                 p4_gauge[2].set(pd[p]['min_temp'])
-                p4_gauge[3].info({'Probe ID': '4', 'Probe Label': pd[p]['name']})
+                p4_gauge[3].info({'probe_id': '4', 'probe_label': pd[p]['name']})
         messages('Successfully updated Grafana.  Sleeping for %s seconds.' % t)
         time.sleep(t)
         return metrics
