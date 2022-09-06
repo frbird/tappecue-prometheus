@@ -1,5 +1,3 @@
-from logging import exception
-from telnetlib import GA
 import yaml
 import sys
 import requests
