@@ -126,7 +126,7 @@ def update_gauges(metrics):
         for p in pd:
             labels = {
                 "name": pd[p]['name'],
-                "probe_num": pd[p],
+                "probe_num": p,
             }
             if p == '1':
                 p1_gauge[0].labels(labels['name'], labels['probe_num']).set(pd[p]['current_temp'])
