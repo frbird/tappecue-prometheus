@@ -1509,3 +1509,38 @@
 [2022-09-06 18:18:25,163] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 715
 [2022-09-06 18:18:25,164] {tappecue-monitor.py:170} INFO - Got probe data
 [2022-09-06 18:18:25,165] {tappecue-monitor.py:170} INFO - Successfully updated Grafana.  Sleeping for 3 seconds.
+[2022-09-06 21:01:50,708] {tappecue-monitor.py:171} INFO - Loaded config file.
+[2022-09-06 21:01:50,922] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 21:01:51,164] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "POST /login HTTP/1.1" 200 56
+[2022-09-06 21:01:51,166] {tappecue-monitor.py:171} INFO - Authenticated to Tappecue API
+[2022-09-06 21:01:51,208] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 21:01:51,349] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 721
+[2022-09-06 21:01:51,352] {tappecue-monitor.py:171} INFO - Got probe data
+[2022-09-06 21:02:25,720] {tappecue-monitor.py:171} INFO - Loaded config file.
+[2022-09-06 21:02:25,740] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 21:02:25,980] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "POST /login HTTP/1.1" 200 56
+[2022-09-06 21:02:25,982] {tappecue-monitor.py:171} INFO - Authenticated to Tappecue API
+[2022-09-06 21:02:26,021] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 21:02:26,066] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 721
+[2022-09-06 21:02:26,067] {tappecue-monitor.py:171} INFO - Got probe data
+[2022-09-06 21:02:49,137] {tappecue-monitor.py:171} INFO - Loaded config file.
+[2022-09-06 21:02:49,163] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 21:02:49,301] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "POST /login HTTP/1.1" 200 56
+[2022-09-06 21:02:49,317] {tappecue-monitor.py:171} INFO - Authenticated to Tappecue API
+[2022-09-06 21:02:49,358] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 21:02:49,407] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 721
+[2022-09-06 21:02:49,411] {tappecue-monitor.py:171} INFO - Got probe data
+[2022-09-06 21:04:58,566] {tappecue-monitor.py:171} INFO - Loaded config file.
+[2022-09-06 21:04:58,629] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 21:04:58,951] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "POST /login HTTP/1.1" 200 56
+[2022-09-06 21:04:58,952] {tappecue-monitor.py:171} INFO - Authenticated to Tappecue API
+[2022-09-06 21:04:59,022] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 21:04:59,065] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 721
+[2022-09-06 21:04:59,070] {tappecue-monitor.py:171} INFO - Got probe data
+[2022-09-06 21:11:33,312] {tappecue-monitor.py:171} INFO - Loaded config file.
+[2022-09-06 21:11:33,434] {connectionpool.py:1003} DEBUG - Starting new HTTPS connection (1): tappecue.babyvelociraptor.com:443
+[2022-09-06 21:11:33,752] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "POST /login HTTP/1.1" 200 56
+[2022-09-06 21:11:33,754] {tappecue-monitor.py:171} INFO - Authenticated to Tappecue API
+[2022-09-06 21:11:33,866] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /sessions HTTP/1.1" 200 82
+[2022-09-06 21:11:33,914] {connectionpool.py:456} DEBUG - https://tappecue.babyvelociraptor.com:443 "GET /session/1 HTTP/1.1" 200 721
+[2022-09-06 21:11:33,915] {tappecue-monitor.py:171} INFO - Got probe data

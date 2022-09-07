@@ -113,9 +113,9 @@ def get_data(token):
 
 def create_gauges(d):
     # g = Gauge('temps', 'all probe temperatures', ['max_temp', 'min_temp', 'curr_temp', 'name'], )
-    ct = Gauge('probe%s_curr_temp' % d, 'Probe %s - Current Temperature' % d, ['name'])
-    max_t = Gauge('probe%s_max_temp' % d, 'Probe %s - Maximum Temperature' % d, ['name'])
-    min_t = Gauge('probe%s_min_temp' % d, 'Probe %s - Minimum Temperature' % d, ['name'])
+    ct = Gauge('probe%s_curr_temp' % d, 'Probe %s - Current Temperature' % d, ['name', 'probe_num'])
+    max_t = Gauge('probe%s_max_temp' % d, 'Probe %s - Maximum Temperature' % d, ['name', 'probe_num'])
+    min_t = Gauge('probe%s_min_temp' % d, 'Probe %s - Minimum Temperature' % d, ['name', 'probe_num'])
     # name = Info('probe%s_name' % d, 'Probe %s - Cook Info' % d)
     return(ct, max_t, min_t)#)
 
@@ -126,26 +126,27 @@ def update_gauges(metrics):
         for p in pd:
             labels = {
                 "name": pd[p]['name'],
+                "probe_num": pd[p],
             }
             if p == '1':
-                p1_gauge[0].labels(labels['name']).set(pd[p]['current_temp'])
-                p1_gauge[1].labels(labels['name']).set(pd[p]['max_temp'])
-                p1_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
+                p1_gauge[0].labels(labels['name'], labels['probe_num']).set(pd[p]['current_temp'])
+                p1_gauge[1].labels(labels['name'], labels['probe_num']).set(pd[p]['max_temp'])
+                p1_gauge[2].labels(labels['name'], labels['probe_num']).set(pd[p]['min_temp'])
                 # p1_gauge[3].info({'probe_id': '1', 'probe_label': pd[p]['name']})
             elif p == '2':
-                p2_gauge[0].labels(labels['name']).set(pd[p]['current_temp'])
-                p2_gauge[1].labels(labels['name']).set(pd[p]['max_temp'])
-                p2_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
+                p2_gauge[0].labels(labels['name'], labels['probe_num']).set(pd[p]['current_temp'])
+                p2_gauge[1].labels(labels['name'], labels['probe_num']).set(pd[p]['max_temp'])
+                p2_gauge[2].labels(labels['name'], labels['probe_num']).set(pd[p]['min_temp'])
                 # p2_gauge[3].info({'probe_id': '2', 'probe_label': pd[p]['name']})
             elif p == '3':
-                p3_gauge[0].labels(pd[p]['name']).set(pd[p]['current_temp'])
-                p3_gauge[1].labels(labels['name']).set(pd[p]['max_temp'])
-                p3_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
+                p3_gauge[0].labels(labels['name'], labels['probe_num']).set(pd[p]['current_temp'])
+                p3_gauge[1].labels(labels['name'], labels['probe_num']).set(pd[p]['max_temp'])
+                p3_gauge[2].labels(labels['name'], labels['probe_num']).set(pd[p]['min_temp'])
                 # p3_gauge[3].info({'probe_id': '3', 'probe_label': pd[p]['name']})
             elif p == '4':
-                p4_gauge[0].labels(labels['name']).set(pd[p]['current_temp'])
-                p4_gauge[1].labels(labels['name']).set(pd[p]['max_temp'])
-                p4_gauge[2].labels(labels['name']).set(pd[p]['min_temp'])
+                p4_gauge[0].labels(labels['name'], labels['probe_num']).set(pd[p]['current_temp'])
+                p4_gauge[1].labels(labels['name'], labels['probe_num']).set(pd[p]['max_temp'])
+                p4_gauge[2].labels(labels['name'], labels['probe_num']).set(pd[p]['min_temp'])
                 # p4_gauge[3].info({'probe_id': '4', 'probe_label': pd[p]['name']})
         # Delay metrics retrieval for 't' seconds if that var is defined.  If not delay for 30 seconds.
         if CHECK_DELAY:
