@@ -3,7 +3,6 @@ import sys
 import logging
 import requests
 import json
-from datetime import datetime
 import time
 from prometheus_client import Gauge, Info
 from prometheus_client import start_http_server
@@ -61,20 +60,6 @@ def getProbeData(token, id):
     response = req(method='get', url=url, headers=headers)
     return json.loads(response.text)
 
-
-# Flattens the data returned from Tappecue and adds session_name, session_id and probe_id to each probe data set.
-# def normalize_data(sess_id, sess_name, pdata):
-#     metric_list = []
-#     for k, v in pdata.items():
-#         data = {
-#         "session_name": sess_name,
-#         "session_id": sess_id,
-#         "probe_id": k,
-#         }
-#         data.update(v)
-#         metric_list.append(data)
-#     return metric_list
-
 # Creates a nested Dictionary with the session information and the probes data.
 def normalize_data(sess_id, sess_name, pdata):
     metrics = {
@@ -111,44 +96,32 @@ def get_data(token):
             messages('No active sessions found.  Will check again in %s seconds.' % '300')
             time.sleep(300)
 
-def create_gauges(d):
-    # g = Gauge('temps', 'all probe temperatures', ['max_temp', 'min_temp', 'curr_temp', 'name'], )
-    ct = Gauge('probe%s_curr_temp' % d, 'Probe %s - Current Temperature' % d, ['name', 'probe_num'])
-    max_t = Gauge('probe%s_max_temp' % d, 'Probe %s - Maximum Temperature' % d, ['name', 'probe_num'])
-    min_t = Gauge('probe%s_min_temp' % d, 'Probe %s - Minimum Temperature' % d, ['name', 'probe_num'])
-    # name = Info('probe%s_name' % d, 'Probe %s - Cook Info' % d)
-    return(ct, max_t, min_t)#)
+# Creates a Prom metric of type Gauge with a name, description and 4 labels (names only).
+def create_gauges():
+    g = Gauge('probe_data', 'Tappecue Probe Information', ['probe_num', 'name', 'role'])
+    return(g)
 
 # TODO create unit test using promtool.  Will need a test set of Tappecue data to use.
 def update_gauges(metrics):
     if metrics:
         pd = metrics['probes']
         for p in pd:
+
+            # These are label values that are applied to each metric below.
             labels = {
-                "name": pd[p]['name'],
                 "probe_num": p,
+                "name": pd[p]['name'],
+                "last_update": pd[p]['last_update'],
+                "max_temp": pd[p]['max_temp'],
+                "min_temp": pd[p]['min_temp'],
             }
-            if p == '1':
-                p1_gauge[0].labels(labels['name'], labels['probe_num']).set(pd[p]['current_temp'])
-                p1_gauge[1].labels(labels['name'], labels['probe_num']).set(pd[p]['max_temp'])
-                p1_gauge[2].labels(labels['name'], labels['probe_num']).set(pd[p]['min_temp'])
-                # p1_gauge[3].info({'probe_id': '1', 'probe_label': pd[p]['name']})
-            elif p == '2':
-                p2_gauge[0].labels(labels['name'], labels['probe_num']).set(pd[p]['current_temp'])
-                p2_gauge[1].labels(labels['name'], labels['probe_num']).set(pd[p]['max_temp'])
-                p2_gauge[2].labels(labels['name'], labels['probe_num']).set(pd[p]['min_temp'])
-                # p2_gauge[3].info({'probe_id': '2', 'probe_label': pd[p]['name']})
-            elif p == '3':
-                p3_gauge[0].labels(labels['name'], labels['probe_num']).set(pd[p]['current_temp'])
-                p3_gauge[1].labels(labels['name'], labels['probe_num']).set(pd[p]['max_temp'])
-                p3_gauge[2].labels(labels['name'], labels['probe_num']).set(pd[p]['min_temp'])
-                # p3_gauge[3].info({'probe_id': '3', 'probe_label': pd[p]['name']})
-            elif p == '4':
-                p4_gauge[0].labels(labels['name'], labels['probe_num']).set(pd[p]['current_temp'])
-                p4_gauge[1].labels(labels['name'], labels['probe_num']).set(pd[p]['max_temp'])
-                p4_gauge[2].labels(labels['name'], labels['probe_num']).set(pd[p]['min_temp'])
-                # p4_gauge[3].info({'probe_id': '4', 'probe_label': pd[p]['name']})
-        # Delay metrics retrieval for 't' seconds if that var is defined.  If not delay for 30 seconds.
+            
+            # sets the value for the metric.  Current temp versus min/max are tracked using coresponding labels.
+            temps.labels(labels['probe_num'], labels['name'], 'curr_temp').set(pd[p]['current_temp'])
+            temps.labels(labels['probe_num'], labels['name'], 'max_temp').set(pd[p]['max_temp'])
+            temps.labels(labels['probe_num'], labels['name'], 'min_temp').set(pd[p]['min_temp']) 
+
+        # Delay metrics retrieval for 'CHECK_DELAY' seconds if that var is defined.  If not delay for 30 seconds.
         if CHECK_DELAY:
             messages('Successfully updated Grafana.  Sleeping for %s seconds.' % CHECK_DELAY)
             time.sleep(CHECK_DELAY)
@@ -157,8 +130,6 @@ def update_gauges(metrics):
             time.sleep(30)
 
 def messages(m):
-    # now = datetime.now()
-    # sys.stdout.write(str(now) + ': %s \n' % m)
     file_handler = logging.FileHandler(filename='tappecue.log')
     stdout_handler = logging.StreamHandler(stream=sys.stdout)
     handlers = [file_handler, stdout_handler]
@@ -171,26 +142,29 @@ def messages(m):
     logger.info(m)
 
 if __name__ == "__main__":
-    conf_file = 'config.yaml'
+    # Initialize these vars so that "if" logic can be applied
     token = None
+    temps = None
+    conf_file = 'config.yaml'
     config = load_vars(conf_file)
     USER = config['tappecue_user']
     PSWD = config['tappecue_password']
     BASE_URL = config['tappecue_api_url']
+
     # Time in seconds between temp checks.
     CHECK_DELAY = config['check_probe_delay']
+
+    # Time in seconds to check for a new session.
     NO_SESSION_DELAY = config['no_session_delay']
 
     start_http_server(8000)
     while True:
         if not token:
+            # Configures a requests session so that only one HTTP connection is use versus one for each HTTP request.
             s = requests.session()
             token = authenticate(USER, PSWD)
-        try:
-            p1_gauge = create_gauges('1')
-            p2_gauge = create_gauges('2')
-            p3_gauge = create_gauges('3')
-            p4_gauge = create_gauges('4')
-        except:
-            pass
+        
+        # Creates the actual Prom Gauge if it is not already present.
+        if not temps:
+            temps = create_gauges()
         update_gauges(get_data(token))
