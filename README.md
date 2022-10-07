@@ -158,6 +158,7 @@ docker-compose up -d
 ```
 That's it!!! The container will mount the config.yaml file and start polling the Tappecue API for an active session. When a session is found it will start checking for probe data. This data is exposed as prometheus metrics on the port you mapped in the docker-compose.yaml file. 
 
+### Running The Script Directly
 If you going to run the script directly you'll need to do the following:
 * Install the Python requirements
    ```sh
