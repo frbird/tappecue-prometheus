@@ -29,9 +29,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/apleto/tappecue-prometheus">
+<!--   <a href="https://github.com/apleto/tappecue-prometheus">
     <img src="images/apleto-logo-header.png" alt="Logo" width="300" height="63">
-  </a>
+  </a> -->
 
 <h3 align="center">Tappecue to Prometheus</h3>
 
