@@ -29,7 +29,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-<!--   <a href="https://github.com/apleto/tappecue-prometheus">
+<!--   <a href="https://github.com/frbird/tappecue-prometheus">
     <img src="images/apleto-logo-header.png" alt="Logo" width="300" height="63">
   </a> -->
 
@@ -38,14 +38,14 @@
   <p align="center">
     Get your grill temperatures into Prometheus and Grafana!
     <br />
-    <!-- <a href="https://github.com/apleto/tappecue-prometheus"><strong>Explore the docs »</strong></a> -->
+    <!-- <a href="https://github.com/frbird/tappecue-prometheus"><strong>Explore the docs »</strong></a> -->
     <!-- <br /> -->
     <br />
-    <!-- <a href="https://github.com/apleto/tappecue-prometheus">View Demo</a>
+    <!-- <a href="https://github.com/frbird/tappecue-prometheus">View Demo</a>
     · -->
-    <a href="https://github.com/apleto/tappecue-prometheus/issues">Report Bug</a>
+    <a href="https://github.com/frbird/tappecue-prometheus/issues">Report Bug</a>
     ·
-    <a href="https://github.com/apleto/tappecue-prometheus/issues">Request Feature</a>
+    <a href="https://github.com/frbird/tappecue-prometheus/issues">Request Feature</a>
   </p>
 </div>
 
@@ -84,7 +84,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `apleto`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description` -->
+<!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `frbird`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description` -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -134,7 +134,7 @@ This only works with Tappecue thermometers. You can go check out there products 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
-   git clone https://github.com/apleto/tappecue-prometheus.git
+   git clone https://github.com/frbird/tappecue-prometheus.git
    ```
 3. Install NPM packages
    ```sh
@@ -186,7 +186,7 @@ To get the data into Grafana you'll need to configure a Prometheus job to scrape
 - [ ] Feature 3
     - [ ] Nested Feature -->
 
-See the [open issues](https://github.com/apleto/tappecue-prometheus/issues) for a full list of proposed features (and known issues). 
+See the [open issues](https://github.com/frbird/tappecue-prometheus/issues) for a full list of proposed features (and known issues). 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -224,9 +224,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com -->
 
-Project Link: [https://github.com/apleto/tappecue-prometheus](https://github.com/apleto/tappecue-prometheus)
+Project Link: [https://github.com/frbird/tappecue-prometheus](https://github.com/frbird/tappecue-prometheus)
 
-Check out our other cool projects here [https://github.com/apleto](https://github.com/apleto)
+Check out our other cool projects here [https://github.com/frbird](https://github.com/frbird)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -248,16 +248,16 @@ Check out our other cool projects here [https://github.com/apleto](https://githu
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png
 [buymeacoffee-url]: https://www.buymeacoffee.com/castletx4
-[contributors-shield]: https://img.shields.io/github/contributors/apleto/tappecue-prometheus.svg?style=for-the-badge
-[contributors-url]: https://github.com/apleto/tappecue-prometheus/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/apleto/tappecue-prometheus.svg?style=for-the-badge
-[forks-url]: https://github.com/apleto/tappecue-prometheus/network/members
-[stars-shield]: https://img.shields.io/github/stars/apleto/tappecue-prometheus.svg?style=for-the-badge
-[stars-url]: https://github.com/apleto/tappecue-prometheus/stargazers
-[issues-shield]: https://img.shields.io/github/issues/apleto/tappecue-prometheus.svg?style=for-the-badge
-[issues-url]: https://github.com/apleto/tappecue-prometheus/issues
-[license-shield]: https://img.shields.io/github/license/apleto/tappecue-prometheus.svg?style=for-the-badge
-[license-url]: https://github.com/github/license/apleto/tappecue-prometheus/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/frbird/tappecue-prometheus.svg?style=for-the-badge
+[contributors-url]: https://github.com/frbird/tappecue-prometheus/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/frbird/tappecue-prometheus.svg?style=for-the-badge
+[forks-url]: https://github.com/frbird/tappecue-prometheus/network/members
+[stars-shield]: https://img.shields.io/github/stars/frbird/tappecue-prometheus.svg?style=for-the-badge
+[stars-url]: https://github.com/frbird/tappecue-prometheus/stargazers
+[issues-shield]: https://img.shields.io/github/issues/frbird/tappecue-prometheus.svg?style=for-the-badge
+[issues-url]: https://github.com/frbird/tappecue-prometheus/issues
+[license-shield]: https://img.shields.io/github/license/frbird/tappecue-prometheus.svg?style=for-the-badge
+[license-url]: https://github.com/github/license/frbird/tappecue-prometheus/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/matt-castle-5b04683/
 [product-screenshot]: images/screenshot2.png
