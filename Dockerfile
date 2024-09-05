@@ -1,15 +1,20 @@
-FROM python:3.8
+# Use the official lightweight Python image
+FROM python:3.9-slim
 
-ADD tappecue-monitor.py .
-ADD requirements.txt .
+# Set the working directory in the container
+WORKDIR /app
 
-EXPOSE 8000
+# Copy the requirements file into the container
+COPY requirements.txt .
 
-HEALTHCHECK CMD curl --fail http://localhost:8000 || exit 1
-
+# Install any dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# CMD ["python", "./tappecue-monitor.py"]
-ENTRYPOINT ["python", "./tappecue-monitor.py"]
+# Copy the rest of the application code into the container
+COPY tappecue-monitor.py .
 
-VOLUME /config
+# Set environment variables
+ENV CONFIG_FILE=config.yaml
+
+# Command to run the application
+CMD ["python", "tappecue-monitor.py"]

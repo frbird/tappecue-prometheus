@@ -27,25 +27,25 @@
 
 
 <!-- PROJECT LOGO -->
-<br />
+<!-- <br />
 <div align="center">
-  <a href="https://github.com/apleto/tappecue-prometheus">
+  <a href="https://github.com/frbird/tappecue-prometheus">
     <img src="images/apleto-logo-header.png" alt="Logo" width="300" height="63">
-  </a>
+  </a> -->
 
 <h3 align="center">Tappecue to Prometheus</h3>
 
   <p align="center">
     Get your grill temperatures into Prometheus and Grafana!
     <br />
-    <!-- <a href="https://github.com/apleto/tappecue-prometheus"><strong>Explore the docs »</strong></a> -->
+    <!-- <a href="https://github.com/frbird/tappecue-prometheus"><strong>Explore the docs »</strong></a> -->
     <!-- <br /> -->
     <br />
-    <!-- <a href="https://github.com/apleto/tappecue-prometheus">View Demo</a>
+    <!-- <a href="https://github.com/frbird/tappecue-prometheus">View Demo</a>
     · -->
-    <a href="https://github.com/apleto/tappecue-prometheus/issues">Report Bug</a>
+    <a href="https://github.com/frbird/tappecue-prometheus/issues">Report Bug</a>
     ·
-    <a href="https://github.com/apleto/tappecue-prometheus/issues">Request Feature</a>
+    <a href="https://github.com/frbird/tappecue-prometheus/issues">Request Feature</a>
   </p>
 </div>
 
@@ -83,6 +83,7 @@
 <br></br>
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+Step up you grill'n game and monitor your temps with Grafana! This project detects an active session on your Tappecue thermometer and then presents the data as Prometheus metrics.  From there you can scrape that data and graph it with Grafana.
 
 <!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `apleto`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description` -->
 
@@ -114,7 +115,7 @@ First, be sure you have everything setup in the config.yaml file. This loads you
 * check_probe_delay - This is how often the script queries for temperature probe data. (seconds)
 * no_session_delay - This sets how long to wait before checking for an active session if one was not already found. (seconds)
 
-This is built to use a single TCP session when an active session is found so there shouldn't be too much load when checking for probe data oftern.
+This is built to use a single TCP session when an active session is found so there shouldn't be too much load when checking for probe data often.
 
 You could simply run the file "tappecue-monitor.py" on your local machine but the better way is to run it as a docker container. I don't have this on a public repo yet so you'll have to build the container yourself until then.
 
@@ -134,7 +135,7 @@ This only works with Tappecue thermometers. You can go check out there products 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
-   git clone https://github.com/apleto/tappecue-prometheus.git
+   git clone https://github.com/frbird/tappecue-prometheus.git
    ```
 3. Install NPM packages
    ```sh
@@ -185,7 +186,7 @@ To get the data into Grafana you'll need to configure a Prometheus job to scrape
 - [ ] Feature 3
     - [ ] Nested Feature -->
 
-See the [open issues](https://github.com/apleto/tappecue-prometheus/issues) for a full list of proposed features (and known issues). 
+See the [open issues](https://github.com/frbird/tappecue-prometheus/issues) for a full list of proposed features (and known issues). 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -223,9 +224,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com -->
 
-Project Link: [https://github.com/apleto/tappecue-prometheus](https://github.com/apleto/tappecue-prometheus)
+Project Link: [https://github.com/frbird/tappecue-prometheus](https://github.com/frbird/tappecue-prometheus)
 
-Check out our other cool projects here [https://github.com/apleto](https://github.com/apleto)
+Check out our other cool projects here [https://github.com/frbird](https://github.com/frbird)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -248,13 +249,13 @@ Check out our other cool projects here [https://github.com/apleto](https://githu
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png
 [buymeacoffee-url]: https://www.buymeacoffee.com/castletx4
 [contributors-shield]: https://img.shields.io/github/contributors/apleto/tappecue-prometheus.svg?style=for-the-badge
-[contributors-url]: https://github.com/apleto/tappecue-prometheus/graphs/contributors
+[contributors-url]: https://github.com/frbird/tappecue-prometheus/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/apleto/tappecue-prometheus.svg?style=for-the-badge
-[forks-url]: https://github.com/apleto/tappecue-prometheus/network/members
+[forks-url]: https://github.com/frbird/tappecue-prometheus/network/members
 [stars-shield]: https://img.shields.io/github/stars/apleto/tappecue-prometheus.svg?style=for-the-badge
-[stars-url]: https://github.com/apleto/tappecue-prometheus/stargazers
+[stars-url]: https://github.com/frbird/tappecue-prometheus/stargazers
 [issues-shield]: https://img.shields.io/github/issues/apleto/tappecue-prometheus.svg?style=for-the-badge
-[issues-url]: https://github.com/apleto/tappecue-prometheus/issues
+[issues-url]: https://github.com/frbird/tappecue-prometheus/issues
 [license-shield]: https://img.shields.io/github/license/apleto/tappecue-prometheus.svg?style=for-the-badge
 [license-url]: https://github.com/github/license/apleto/tappecue-prometheus/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
