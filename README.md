@@ -27,10 +27,10 @@
 
 
 <!-- PROJECT LOGO -->
-<!-- <br />
+<br />
 <div align="center">
   <a href="https://github.com/frbird/tappecue-prometheus">
-<!--
+
 
 <h3 align="center">Tappecue to Prometheus</h3>
 
