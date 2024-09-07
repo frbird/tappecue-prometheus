@@ -71,7 +71,7 @@ def getSession(token: dict) -> dict:
 # Pulls probe data for the given session
 def getProbeData(token: dict, id: str) -> dict:
     headers = token
-    url = f'{BASE_URL}/sessions/{id}/probes'
+    url = f'{BASE_URL}/session/{id}'
     response = req(method='get', url=url, headers=headers)
     return response.json()
 
@@ -132,7 +132,7 @@ def update_gauges(metrics):
             }
             
             # sets the value for the metric.  Current temp versus min/max are tracked using coresponding labels.
-            temps.labels(labels['probe_num'], labels['name'], 'curr_temp').set(pd[p]['current_temp'])
+            temps.labels(labels['probe_num'], labels['name'], 'curr_temp').set(pd[p]['current_temp'] or 0)
             temps.labels(labels['probe_num'], labels['name'], 'max_temp').set(pd[p]['max_temp'])
             temps.labels(labels['probe_num'], labels['name'], 'min_temp').set(pd[p]['min_temp']) 
 
