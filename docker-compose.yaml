@@ -1,9 +1,8 @@
 ---
-# This is an example.  You'll need to build your own container and update the "image" section.
 version: '3'
 services:
   tappecue-monitor:
-    image: tappecue-monitor
+    image: ghcr.io/frbird/tappecue-prometheus:latest
     ports:
       - 8000:8000
     volumes:
@@ -11,17 +10,17 @@ services:
     restart: unless-stopped
 
 # Add this to turn up a Grafana Agent container to scrape the metrics.
-  grafana-agent:
-    image: grafana/agent:v0.27.0
-    network_mode: host
-    cap_add:
-      - SYS_TIME
-    pid: "host"
-    volumes:
-      - /tmp/agent:/etc/agent/data
-      - /home/ubuntu/apps/grafana/config.yaml:/etc/agent/agent.yaml
-      - "/:/host/root:ro,rslave"
-      - "/sys:/host/sys:ro,rslave"
-      - "/proc:/host/proc:ro,rslave"
-      - /tmp/agent:/etc/agent
-    restart: unless-stopped
+  # grafana-agent:
+  #   image: grafana/agent:v0.27.0
+  #   network_mode: host
+  #   cap_add:
+  #     - SYS_TIME
+  #   pid: "host"
+  #   volumes:
+  #     - /tmp/agent:/etc/agent/data
+  #     - /home/ubuntu/apps/grafana/config.yaml:/etc/agent/agent.yaml
+  #     - "/:/host/root:ro,rslave"
+  #     - "/sys:/host/sys:ro,rslave"
+  #     - "/proc:/host/proc:ro,rslave"
+  #     - /tmp/agent:/etc/agent
+  #   restart: unless-stopped

@@ -154,7 +154,7 @@ This only works with Tappecue thermometers. You can go check out there products 
 ### Using Docker (preferred)
 Docker Compose makes it really straightforward. From the directory containing the docker-compose file run:
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 That's it!!! The container will mount the config.yaml file and start polling the Tappecue API for an active session. When a session is found it will start checking for probe data. This data is exposed as prometheus metrics on the port you mapped in the docker-compose.yaml file. 
 
