@@ -1,11 +1,52 @@
-import yaml
+"""
+Tappecue Monitor
+This script monitors Tappecue sessions and retrieves probe data for active sessions.
+It then creates Prometheus metricsbased on the retrieved data and updates Grafana with the metrics.
+Author: Matt Castle
+Usage:
+    - Ensure that the Tappecue configuration file (config.yaml) is present in the same directory as this script.
+    - Run the script to start monitoring Tappecue sessions and updating Grafana.
+Requirements:
+    - Python 3.x
+    - config.yaml file with Tappecue API credentials and other configuration settings.
+    - prometheus_client library
+Functions:
+    - load_vars(conf_file: str) -> dict:
+        Loads variables from the YAML config file.
+    - req(method: str, url: str, headers: dict = None, data: dict = None) -> requests.Response:
+        Sends an HTTP request to the specified URL with the given method, headers, and data.
+    - authenticate(u: str, p: str) -> dict:
+        Authenticates to the Tappecue API using the provided username and password.
+    - getSession(token: dict) -> dict:
+        Retrieves information about active Tappecue sessions.
+    - getProbeData(token: dict, id: str) -> dict:
+        Retrieves probe data for a specific Tappecue session.
+    - normalize_data(sess_id, sess_name, pdata) -> dict:
+        Creates a nested dictionary with session information and probe data.
+    - get_data(token) -> dict:
+        Retrieves metrics for each active Tappecue session and returns a dictionary.
+    - create_gauges() -> Gauge:
+        Creates a Prometheus Gauge metric for Tappecue probe information.
+    - update_gauges(metrics) -> None:
+        Updates the Prometheus Gauges with the retrieved metrics.
+    - messages(m) -> None:
+        Logs messages to a file and stdout.
+Main Execution:
+    - Loads configuration variables from the config.yaml file.
+    - Starts an HTTP server for Prometheus metrics.
+    - Authenticates to the Tappecue API.
+    - Creates Prometheus Gauges for probe data.
+    - Continuously retrieves and updates metrics for active Tappecue sessions.
+"""
+
 import sys
 import os
 import logging
-import requests
-import json
+# import json
 import time
-from prometheus_client import Gauge, Info
+import requests
+import yaml
+from prometheus_client import Gauge
 from prometheus_client import start_http_server
 
 # Configure logging
