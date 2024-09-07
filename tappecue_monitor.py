@@ -1,5 +1,6 @@
 import yaml
 import sys
+import os
 import logging
 import requests
 import json
@@ -7,58 +8,72 @@ import time
 from prometheus_client import Gauge, Info
 from prometheus_client import start_http_server
 
-# Loads variable from the YAML config file.  This is currently looing for tappecue_config.yaml
-def load_vars(conf_file):
-    with open(conf_file, 'r') as c:
-        config_vars = yaml.safe_load(c)
-    c.close()
-    messages('Loaded config file.')
-    return config_vars
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
-# requires a URL, method and depending on the method headers or data.
-def req(**kwargs):
-    if kwargs['method'] == 'post':
-        try:
-            response = s.post(url = kwargs['url'], data = kwargs['data'])
-            return response
-        except:
-            raise Exception(response.text)
-    elif kwargs['method'] == 'get':
-        try:
-            response = s.get(url = kwargs['url'], headers = kwargs['headers'])
-            return response
-        except:
-            raise Exception(response.text)
+
+# Loads variable from the YAML config file. This is currently looking for tappecue_config.yaml
+def load_vars(conf_file: str) -> dict:
+    try:
+        with open(conf_file, 'r') as c:
+            config_vars = yaml.safe_load(c)
+        logging.info('Loaded config file.')
+        return config_vars
+    except FileNotFoundError:
+        logging.error(f'Config file {conf_file} not found.')
+        sys.exit(1)
+    except yaml.YAMLError as e:
+        logging.error(f'Error parsing YAML file: {e}')
+        sys.exit(1)
+
+# Requires a URL, method and depending on the method headers or data.
+def req(method: str, url: str, headers: dict = None, data: dict = None) -> requests.Response:
+    try:
+        if method.lower() == 'post':
+            response = requests.post(url, data=data)
+        elif method.lower() == 'get':
+            response = requests.get(url, headers=headers)
+        else:
+            raise ValueError(f'Unsupported method: {method}')
+        response.raise_for_status()
+        return response
+    except requests.RequestException as e:
+        logging.error(f'HTTP request failed: {e}')
+        raise
 
 # Authenticate to Tappecue API
-def authenticate (u, p):
-    url = BASE_URL + "/login"
-    data = {
-        'username': u,
-        'password': p
-    }
-    response = req(method='post', url=url, data=data)
-    token = json.loads(response.text)
-    if response.status_code == 200:
-        messages('Authenticated to Tappecue API')
-        return token
-    else:
-        messages('error: Authentication failed!')
-        raise Exception(response.status_code)
+def authenticate(u: str, p: str) -> dict:
+    try:
+        url = f'{BASE_URL}/login'
+        data = {
+            'username': u,
+            'password': p
+        }
+        response = req(method='post', url=url, data=data)
+        token = response.json()
+        if response.status_code == 200:
+            logging.info('Authenticated to Tappecue API')
+            return token
+        else:
+            logging.error('Authentication failed!')
+            raise Exception(response.status_code)
+    except Exception as e:
+        logging.error(f'Error authenticating to Tappecue: {e}')
+        sys.exit(1)
 
 # Returns any active Tappecue sessions
-def getSession(token):
+def getSession(token: dict) -> dict:
     headers = token
-    url = BASE_URL + "/sessions"
+    url = f'{BASE_URL}/sessions'
     response = req(method='get', url=url, headers=headers)
-    return json.loads(response.text)
+    return response.json()
 
 # Pulls probe data for the given session
-def getProbeData(token, id):
+def getProbeData(token: dict, id: str) -> dict:
     headers = token
-    url = BASE_URL + "/session/" + str(id)
+    url = f'{BASE_URL}/session/{id}'
     response = req(method='get', url=url, headers=headers)
-    return json.loads(response.text)
+    return response.json()
 
 # Creates a nested Dictionary with the session information and the probes data.
 def normalize_data(sess_id, sess_name, pdata):
@@ -117,17 +132,18 @@ def update_gauges(metrics):
             }
             
             # sets the value for the metric.  Current temp versus min/max are tracked using coresponding labels.
-            temps.labels(labels['probe_num'], labels['name'], 'curr_temp').set(pd[p]['current_temp'])
+            temps.labels(labels['probe_num'], labels['name'], 'curr_temp').set(pd[p]['current_temp'] or 0)
             temps.labels(labels['probe_num'], labels['name'], 'max_temp').set(pd[p]['max_temp'])
             temps.labels(labels['probe_num'], labels['name'], 'min_temp').set(pd[p]['min_temp']) 
 
         # Delay metrics retrieval for 'CHECK_DELAY' seconds if that var is defined.  If not delay for 30 seconds.
         if CHECK_DELAY:
-            messages('Successfully updated Grafana.  Sleeping for %s seconds.' % CHECK_DELAY)
+            messages(f'Successfully updated Grafana.  Sleeping for {CHECK_DELAY} seconds.')
             time.sleep(CHECK_DELAY)
         else:
-            messages('Successfully updated Grafana.  Sleeping for %s seconds.' % '30')
-            time.sleep(30)
+            sleep_time = 30
+            messages(f'Successfully updated Grafana.  Sleeping for {sleep_time} seconds.')
+            time.sleep(sleep_time)
 
 def messages(m):
     file_handler = logging.FileHandler(filename='tappecue.log')
@@ -145,11 +161,12 @@ if __name__ == "__main__":
     # Initialize these vars so that "if" logic can be applied
     token = None
     temps = None
-    conf_file = 'config.yaml'
+    conf_file = os.getenv('CONFIG_FILE', 'config.yaml')
     config = load_vars(conf_file)
     USER = config['tappecue_user']
     PSWD = config['tappecue_password']
     BASE_URL = config['tappecue_api_url']
+    LOG_LEVEL = config['logging_level']
 
     # Time in seconds between temp checks.
     CHECK_DELAY = config['check_probe_delay']

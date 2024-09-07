@@ -27,11 +27,10 @@
 
 
 <!-- PROJECT LOGO -->
-<br />
+<!-- <br />
 <div align="center">
-<!--   <a href="https://github.com/frbird/tappecue-prometheus">
-    <img src="images/apleto-logo-header.png" alt="Logo" width="300" height="63">
-  </a> -->
+  <a href="https://github.com/frbird/tappecue-prometheus">
+<!--
 
 <h3 align="center">Tappecue to Prometheus</h3>
 
@@ -83,6 +82,7 @@
 <br></br>
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+Step up you grill'n game and monitor your temps with Grafana! This project detects an active session on your Tappecue thermometer and then presents the data as Prometheus metrics.  From there you can scrape that data and graph it with Grafana.
 
 <!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `frbird`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description` -->
 
@@ -114,7 +114,7 @@ First, be sure you have everything setup in the config.yaml file. This loads you
 * check_probe_delay - This is how often the script queries for temperature probe data. (seconds)
 * no_session_delay - This sets how long to wait before checking for an active session if one was not already found. (seconds)
 
-This is built to use a single TCP session when an active session is found so there shouldn't be too much load when checking for probe data oftern.
+This is built to use a single TCP session when an active session is found so there shouldn't be too much load when checking for probe data often.
 
 You could simply run the file "tappecue-monitor.py" on your local machine but the better way is to run it as a docker container. I don't have this on a public repo yet so you'll have to build the container yourself until then.
 
@@ -248,16 +248,16 @@ Check out our other cool projects here [https://github.com/frbird](https://githu
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png
 [buymeacoffee-url]: https://www.buymeacoffee.com/castletx4
-[contributors-shield]: https://img.shields.io/github/contributors/frbird/tappecue-prometheus.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/apleto/tappecue-prometheus.svg?style=for-the-badge
 [contributors-url]: https://github.com/frbird/tappecue-prometheus/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/frbird/tappecue-prometheus.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/apleto/tappecue-prometheus.svg?style=for-the-badge
 [forks-url]: https://github.com/frbird/tappecue-prometheus/network/members
-[stars-shield]: https://img.shields.io/github/stars/frbird/tappecue-prometheus.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/apleto/tappecue-prometheus.svg?style=for-the-badge
 [stars-url]: https://github.com/frbird/tappecue-prometheus/stargazers
-[issues-shield]: https://img.shields.io/github/issues/frbird/tappecue-prometheus.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/apleto/tappecue-prometheus.svg?style=for-the-badge
 [issues-url]: https://github.com/frbird/tappecue-prometheus/issues
-[license-shield]: https://img.shields.io/github/license/frbird/tappecue-prometheus.svg?style=for-the-badge
-[license-url]: https://github.com/github/license/frbird/tappecue-prometheus/LICENSE
+[license-shield]: https://img.shields.io/github/license/apleto/tappecue-prometheus.svg?style=for-the-badge
+[license-url]: https://github.com/github/license/apleto/tappecue-prometheus/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/matt-castle-5b04683/
 [product-screenshot]: images/screenshot2.png
