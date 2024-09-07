@@ -29,4 +29,6 @@ jobs:
 
     - name: Run tests
       run: |
+        pwd
+        ls -alh
         pytest unit_test.py
