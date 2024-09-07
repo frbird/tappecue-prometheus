@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag tappecue-monitor:$(date +%s)
+
+    - name: Push the Docker image
+      run: echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Tag the Docker image
+      run: docker tag tappecue-monitor:$(date +%s) ghcr.io/${{ github.repository }}:latest
+
+    - name: Push the Docker image
+      run: docker push ghcr.io/${{ github.repository }}:latest
