@@ -17,4 +17,4 @@ COPY tappecue-monitor.py .
 ENV CONFIG_FILE=config.yaml
 
 # Command to run the application
-CMD ["python", "tappecue-monitor.py"]
+CMD ["python", "tappecue_monitor.py"]
