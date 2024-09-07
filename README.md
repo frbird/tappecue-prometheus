@@ -30,8 +30,7 @@
 <!-- <br />
 <div align="center">
   <a href="https://github.com/frbird/tappecue-prometheus">
-    <img src="images/apleto-logo-header.png" alt="Logo" width="300" height="63">
-  </a> -->
+<!--
 
 <h3 align="center">Tappecue to Prometheus</h3>
 
@@ -85,7 +84,7 @@
 ## About The Project
 Step up you grill'n game and monitor your temps with Grafana! This project detects an active session on your Tappecue thermometer and then presents the data as Prometheus metrics.  From there you can scrape that data and graph it with Grafana.
 
-<!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `apleto`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description` -->
+<!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `frbird`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description` -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -159,6 +158,7 @@ docker-compose up -d
 ```
 That's it!!! The container will mount the config.yaml file and start polling the Tappecue API for an active session. When a session is found it will start checking for probe data. This data is exposed as prometheus metrics on the port you mapped in the docker-compose.yaml file. 
 
+### Running The Script Directly
 If you going to run the script directly you'll need to do the following:
 * Install the Python requirements
    ```sh
