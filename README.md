@@ -116,9 +116,9 @@ First, be sure you have everything setup in the config.yaml file. This loads you
 
 This is built to use a single TCP session when an active session is found so there shouldn't be too much load when checking for probe data often.
 
-You could simply run the file "tappecue-monitor.py" on your local machine but the better way is to run it as a docker container. I don't have this on a public repo yet so you'll have to build the container yourself until then.
+You could simply run the file "tappecue-monitor.py" on your local machine but the better way is to run the container.
 
-If you do decide to just run the script without a container be sure to install the Python requirements.
+If you decide to just run the script without a container be sure to install the Python requirements.
 
 ```sh
 pip install -r requirements.txt
