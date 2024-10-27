@@ -35,6 +35,30 @@ def test_load_vars_yaml_error():
         with pytest.raises(SystemExit):
             load_vars("config.yaml")
 
+def test_load_environment_vars():
+    mock_yaml_content = """
+    tappecue_user: "yaml_user"
+    tappecue_password: "yaml_password"
+    tappecue_api_url: "yaml-http://example.com"
+    logging_level: "yaml-INFO"
+    check_probe_delay: "yaml-30"
+    no_session_delay: "yaml-60"
+    """
+    with patch("builtins.open", mock_open(read_data=mock_yaml_content)):
+        config = load_vars("config.yaml")
+        os.environ["TAPPECUE_USER"] = "user"
+        os.environ["TAPPECUE_PASSWORD"] = "password"
+        os.environ["TAPPECUE_API_URL"] = "http://example.com"
+        os.environ["LOGGING_LEVEL"] = "INFO"
+        os.environ["CHECK_PROBE_DELAY"] = "30"
+        os.environ["NO_SESSION_DELAY"] = "60"
+        assert config["tappecue_user"] == "user"
+        assert config["tappecue_password"] == "password"
+        assert config["tappecue_api_url"] == "http://example.com"
+        assert config["logging_level"] == "INFO"
+        assert config["check_probe_delay"] == 30
+        assert config["no_session_delay"] == 60
+
 # Test req function
 def test_req_get_success():
     with patch("requests.get") as mock_get:
