@@ -42,7 +42,6 @@ Main Execution:
 import sys
 import os
 import logging
-# import json
 import time
 import requests
 import yaml
@@ -57,15 +56,37 @@ logging.basicConfig(level=logging.INFO)
 def load_vars(conf_file: str) -> dict:
     try:
         with open(conf_file, 'r') as c:
-            config_vars = yaml.safe_load(c)
+            config = yaml.safe_load(c)
         logging.info('Loaded config file.')
-        return config_vars
-    except FileNotFoundError:
-        logging.error(f'Config file {conf_file} not found.')
-        sys.exit(1)
+    except (FileNotFoundError, PermissionError) as e:
+        logging.error(f'Error reading config file {conf_file}: {e}')
+        raise
     except yaml.YAMLError as e:
         logging.error(f'Error parsing YAML file: {e}')
-        sys.exit(1)
+        raise
+
+    # Load API configuration variables
+    USER = os.getenv('TAPPECUE_USER', config.get('tappecue_user'))
+    PSWD = os.getenv('TAPPECUE_PASSWORD', config.get('tappecue_password'))
+    BASE_URL = os.getenv('TAPPECUE_API_URL', config.get('tappecue_api_url'))
+
+    # Time in seconds between temp checks.
+    CHECK_DELAY = int(os.getenv('CHECK_PROBE_DELAY', config.get('check_probe_delay')))
+
+    # Time in seconds to check for a new session.
+    NO_SESSION_DELAY = int(os.getenv('NO_SESSION_DELAY', config.get('no_session_delay')))
+
+    # Set logging level
+    LOG_LEVEL = os.getenv('LOG_LEVEL', config.get('log_level'))
+
+    return {
+        'user': USER,
+        'password': PSWD,
+        'base_url': BASE_URL,
+        'check_delay': CHECK_DELAY,
+        'no_session_delay': NO_SESSION_DELAY,
+        'log_level': LOG_LEVEL
+    }
 
 # Requires a URL, method and depending on the method headers or data.
 def req(method: str, url: str, headers: dict = None, data: dict = None) -> requests.Response:
@@ -85,7 +106,7 @@ def req(method: str, url: str, headers: dict = None, data: dict = None) -> reque
 # Authenticate to Tappecue API
 def authenticate(u: str, p: str) -> dict:
     try:
-        url = f'{BASE_URL}/login'
+        url = f'{config["base_url"]}/login'
         data = {
             'username': u,
             'password': p
@@ -105,14 +126,14 @@ def authenticate(u: str, p: str) -> dict:
 # Returns any active Tappecue sessions
 def getSession(token: dict) -> dict:
     headers = token
-    url = f'{BASE_URL}/sessions'
+    url = f'{config["base_url"]}/sessions'
     response = req(method='get', url=url, headers=headers)
     return response.json()
 
 # Pulls probe data for the given session
 def getProbeData(token: dict, id: str) -> dict:
     headers = token
-    url = f'{BASE_URL}/session/{id}'
+    url = f'{config["base_url"]}/session/{id}'
     response = req(method='get', url=url, headers=headers)
     return response.json()
 
@@ -145,9 +166,9 @@ def get_data(token):
         return metrics
     else:
         # Wait for a period of time before checking for an active session.  Default is 300 seconds (5 minutes).
-        if NO_SESSION_DELAY:
-            messages('No active sessions found.  Will check again in %s seconds.' % NO_SESSION_DELAY)
-            time.sleep(NO_SESSION_DELAY)
+        if config["no_session_delay"]:
+            messages('No active sessions found.  Will check again in %s seconds.' % config["no_session_delay"])
+            time.sleep(config["no_session_delay"])
         else:
             messages('No active sessions found.  Will check again in %s seconds.' % '300')
             time.sleep(300)
@@ -178,9 +199,9 @@ def update_gauges(metrics):
             temps.labels(labels['probe_num'], labels['name'], 'min_temp').set(pd[p]['min_temp']) 
 
         # Delay metrics retrieval for 'CHECK_DELAY' seconds if that var is defined.  If not delay for 30 seconds.
-        if CHECK_DELAY:
-            messages(f'Successfully updated Grafana.  Sleeping for {CHECK_DELAY} seconds.')
-            time.sleep(CHECK_DELAY)
+        if config["check_delay"]:
+            messages(f'Successfully updated Grafana.  Sleeping for {config["check_delay"]} seconds.')
+            time.sleep(config["check_delay"])
         else:
             sleep_time = 30
             messages(f'Successfully updated Grafana.  Sleeping for {sleep_time} seconds.')
@@ -204,23 +225,13 @@ if __name__ == "__main__":
     temps = None
     conf_file = os.getenv('CONFIG_FILE', 'config.yaml')
     config = load_vars(conf_file)
-    USER = config['tappecue_user']
-    PSWD = config['tappecue_password']
-    BASE_URL = config['tappecue_api_url']
-    LOG_LEVEL = config['logging_level']
-
-    # Time in seconds between temp checks.
-    CHECK_DELAY = config['check_probe_delay']
-
-    # Time in seconds to check for a new session.
-    NO_SESSION_DELAY = config['no_session_delay']
 
     start_http_server(8000)
     while True:
         if not token:
             # Configures a requests session so that only one HTTP connection is use versus one for each HTTP request.
             s = requests.session()
-            token = authenticate(USER, PSWD)
+            token = authenticate(config["user"], config["password"])
         
         # Creates the actual Prom Gauge if it is not already present.
         if not temps:
