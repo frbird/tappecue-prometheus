@@ -224,7 +224,8 @@ if __name__ == "__main__":
     token = None
     temps = None
     conf_file = os.getenv('CONFIG_FILE', 'config.yaml')
-    config = load_vars(conf_file)
+    if conf_file:
+        config = load_vars(conf_file)
 
     start_http_server(8000)
     while True:
