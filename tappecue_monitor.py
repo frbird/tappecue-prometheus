@@ -60,24 +60,25 @@ def load_vars(conf_file: str) -> dict:
         logging.info('Loaded config file.')
     except (FileNotFoundError, PermissionError) as e:
         logging.error(f'Error reading config file {conf_file}: {e}')
-        raise
     except yaml.YAMLError as e:
         logging.error(f'Error parsing YAML file: {e}')
-        raise
 
     # Load API configuration variables
-    USER = os.getenv('TAPPECUE_USER', config.get('tappecue_user'))
-    PSWD = os.getenv('TAPPECUE_PASSWORD', config.get('tappecue_password'))
-    BASE_URL = os.getenv('TAPPECUE_API_URL', config.get('tappecue_api_url'))
+    try:
+        USER = os.getenv('TAPPECUE_USER', config.get('tappecue_user'))
+        PSWD = os.getenv('TAPPECUE_PASSWORD', config.get('tappecue_password'))
+        BASE_URL = os.getenv('TAPPECUE_API_URL', config.get('tappecue_api_url'))
 
-    # Time in seconds between temp checks.
-    CHECK_DELAY = int(os.getenv('CHECK_PROBE_DELAY', config.get('check_probe_delay')))
+        # Time in seconds between temp checks.
+        CHECK_DELAY = int(os.getenv('CHECK_PROBE_DELAY', config.get('check_probe_delay')))
 
-    # Time in seconds to check for a new session.
-    NO_SESSION_DELAY = int(os.getenv('NO_SESSION_DELAY', config.get('no_session_delay')))
+        # Time in seconds to check for a new session.
+        NO_SESSION_DELAY = int(os.getenv('NO_SESSION_DELAY', config.get('no_session_delay')))
 
-    # Set logging level
-    LOG_LEVEL = os.getenv('LOG_LEVEL', config.get('log_level'))
+        # Set logging level
+        LOG_LEVEL = os.getenv('LOG_LEVEL', config.get('log_level'))
+    except Exception as e:
+        logging.error(f'Error loading configuration variables: {e}')
 
     return {
         'user': USER,
@@ -224,8 +225,7 @@ if __name__ == "__main__":
     token = None
     temps = None
     conf_file = os.getenv('CONFIG_FILE', 'config.yaml')
-    if conf_file:
-        config = load_vars(conf_file)
+    config = load_vars(conf_file)
 
     start_http_server(8000)
     while True:
