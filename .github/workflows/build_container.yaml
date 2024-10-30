@@ -6,11 +6,12 @@ on:
     paths:
       - '**/*.py'
       - '**/Dockerfile'
-  pull_request:
-    branches: [ "main" ]
-    paths:
-      - '**/*.py'
-      - '**/Dockerfile'
+  # pull_request:
+  #   branches: [ "main" ]
+  #   paths:
+  #     - '**/*.py'
+  #     - '**/Dockerfile'
+
 
 jobs:
 
