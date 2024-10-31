@@ -68,16 +68,16 @@ def load_vars(conf_file: str) -> dict:
     try:
         USER = os.getenv('TAPPECUE_USER', config.get('tappecue_user'))
         PSWD = os.getenv('TAPPECUE_PASSWORD', config.get('tappecue_password'))
-        BASE_URL = os.getenv('TAPPECUE_API_URL', config.get('tappecue_api_url'))
+        BASE_URL = os.getenv('TAPPECUE_API_URL', config.get('tappecue_api_url', 'https://tappecue.babyvelociraptor.com'))
 
         # Time in seconds between temp checks.
-        CHECK_DELAY = int(os.getenv('CHECK_PROBE_DELAY', config.get('check_probe_delay')))
+        CHECK_DELAY = int(os.getenv('CHECK_PROBE_DELAY', config.get('check_probe_delay', 60)))
 
         # Time in seconds to check for a new session.
-        NO_SESSION_DELAY = int(os.getenv('NO_SESSION_DELAY', config.get('no_session_delay')))
+        NO_SESSION_DELAY = int(os.getenv('NO_SESSION_DELAY', config.get('no_session_delay', 1200)))
 
         # Set logging level
-        LOG_LEVEL = os.getenv('LOG_LEVEL', config.get('log_level'))
+        LOG_LEVEL = os.getenv('LOG_LEVEL', config.get('log_level', 'WARN'))
     except Exception as e:
         logging.error(f'Error loading configuration variables: {e}')
 
