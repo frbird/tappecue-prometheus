@@ -54,14 +54,15 @@ logging.basicConfig(level=logging.INFO)
 
 # Loads variable from the YAML config file. This is currently looking for tappecue_config.yaml
 def load_vars(conf_file: str) -> dict:
+    config = {}
     try:
         with open(conf_file, 'r') as c:
             config = yaml.safe_load(c)
         logging.info('Loaded config file.')
     except (FileNotFoundError, PermissionError) as e:
-        logging.error(f'Error reading config file {conf_file}: {e}')
+        logging.error(f'Error reading config file {conf_file}: {e}. Please provide either a config file or set Environment variables.')
     except yaml.YAMLError as e:
-        logging.error(f'Error parsing YAML file: {e}')
+        logging.error(f'Error parsing YAML file: {e}.')
 
     # Load API configuration variables
     try:
