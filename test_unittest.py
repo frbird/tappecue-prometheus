@@ -11,7 +11,6 @@ def test_load_vars_success():
     tappecue_user: "user"
     tappecue_password: "password"
     tappecue_api_url: "http://example.com"
-    log_level: "INFO"
     check_probe_delay: 30
     no_session_delay: 60
     """
@@ -20,7 +19,6 @@ def test_load_vars_success():
         assert config["user"] == "user"
         assert config["password"] == "password"
         assert config["base_url"] == "http://example.com"
-        assert config["log_level"] == "INFO"
         assert config["check_delay"] == 30
         assert config["no_session_delay"] == 60
 
@@ -59,6 +57,5 @@ def test_load_environment_vars():
         assert config["user"] == "env_user"
         assert config["password"] == "env_password"
         assert config["base_url"] == "env-http://example.com"
-        assert config["log_level"] == "env-INFO"
         assert config["check_delay"] == 40
         assert config["no_session_delay"] == 70

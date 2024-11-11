@@ -50,26 +50,20 @@ import yaml
 from prometheus_client import Gauge
 from prometheus_client import start_http_server
 
-def setup_logger():
-    logger = logging.getLogger('tappecue')
-    log_level = os.getenv('LOG_LEVEL', 'WARN').upper()
-    logger.setLevel(log_level)
+# Configure a logger with a default level of 'INFO'.
+log_level = os.getenv('LOG_LEVEL', 'INFO')
+logger = logging.getLogger(__name__)
+logger.setLevel(log_level)
 
-    file_handler = logging.FileHandler(filename='tappecue.log')
-    file_handler.setLevel(log_level)
-    stdout_handler = logging.StreamHandler(stream=sys.stdout)
-    stdout_handler.setLevel(log_level)
+# Create log handlers.
+formatter = logging.Formatter('[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s')
+file_handler = logging.FileHandler(filename='tappecue.log')
+file_handler.setFormatter(formatter)
+stdout_handler = logging.StreamHandler(stream=sys.stdout)
+stdout_handler.setLevel(logging.DEBUG)
 
-    formatter = logging.Formatter('[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s')
-    file_handler.setFormatter(formatter)
-    stdout_handler.setFormatter(formatter)
-
-    if not logger.handlers:
-        logger.addHandler(file_handler)
-        logger.addHandler(stdout_handler)
-    
-    logger.info(f'Starting Tappecue Monitor.  Log level set to {log_level}.')
-    return logger
+logger.addHandler(file_handler)
+logger.addHandler(stdout_handler)
 
 # Loads variable from the YAML config file. This is currently looking for tappecue_config.yaml
 def load_vars(conf_file: str) -> dict:
@@ -226,9 +220,6 @@ if __name__ == "__main__":
     # Initialize these vars so that "if" logic can be applied
     token = None
     temps = None
-
-    # Set the log level to the value in the config file or default to WARN.
-    logger = setup_logger()
 
     conf_file = os.getenv('CONFIG_FILE', 'config.yaml')
     config = load_vars(conf_file)
