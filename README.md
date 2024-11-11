@@ -109,7 +109,7 @@ Step up you grill'n game and monitor your temps with Grafana! This project detec
 <!-- GETTING STARTED -->
 ## Getting Started
 
-First, be sure you have everything setup in the config.yaml file. This loads your Tappecue account info so that the script can query the API, and it also allows you to tweak a few configuration settings such as:
+First, be sure you have your configuration variable specified. The preferred method is to utilize environment variables but this can also be done in the config.yaml file. This loads your Tappecue account info so that the script can query the API, and it also allows you to tweak a few configuration settings such as:
 
 * check_probe_delay - This is how often the script queries for temperature probe data. (seconds)
 * no_session_delay - This sets how long to wait before checking for an active session if one was not already found. (seconds)
@@ -156,7 +156,7 @@ Docker Compose makes it really straightforward. From the directory containing th
 ```sh
 docker compose up -d
 ```
-That's it!!! The container will mount the config.yaml file and start polling the Tappecue API for an active session. When a session is found it will start checking for probe data. This data is exposed as prometheus metrics on the port you mapped in the docker-compose.yaml file. 
+That's it!!! The container will get its configuration from the specified environment variables, or from the config.yaml file, and start polling the Tappecue API for an active session. When a session is found it look for active probe data. This data is exposed as Prometheus metrics that can be scraped like any other Prometheus data. 
 
 ### Running The Script Directly
 If you going to run the script directly you'll need to do the following:
@@ -164,7 +164,7 @@ If you going to run the script directly you'll need to do the following:
    ```sh
    pip install -r requirements.txt
    ```
-* Make sure the config file is in the same directory as tappecue-monitor.py
+* Specify environment variable or optionally make a config file and be sure it's in the same directory as tappecue-monitor.py
 * Run tappecue-monitor.py
    ```sh
    python tappecue-monitor.py
@@ -173,9 +173,6 @@ If you going to run the script directly you'll need to do the following:
 To get the data into Grafana you'll need to configure a Prometheus job to scrape the data or run the Grafana Agent to scrape the data.
 
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- ROADMAP -->
@@ -186,11 +183,36 @@ To get the data into Grafana you'll need to configure a Prometheus job to scrape
 - [ ] Feature 3
     - [ ] Nested Feature -->
 
+
+### Configuration Options
+You can specify configuration options using environment variables (preferred) or using a config.yaml file.  All environment variable keys should be upper case.
+
+If you choose to use a config file an example is included in to the repo ```config-example.yaml```. If you choose to use this file it should be renamed to ```config.yaml```.
+
+| Variable Name       | Description                                                                 | Default Value          |
+|---------------------|-----------------------------------------------------------------------------|------------------------|
+| `CONFIG_FILE`       | Path to the configuration file.                                              | `config.yaml`          |
+| `TAPPECUE_USER`     | Username for Tappecue API authentication.                                    | `none`         |
+| `TAPPECUE_PASSWORD` | Password for Tappecue API authentication.                                    | `none`     |
+| `TAPPECUE_API_URL`  | Base URL for the Tappecue API.                                               | `https://tappecue.babyvelociraptor.com`|
+| `CHECK_PROBE_DELAY` | Time in seconds between temperature checks.                                  | `60`                   |
+| `NO_SESSION_DELAY`  | Time in seconds to wait before checking for a new session if none is active. | `1200`                   |
+| `LOG_LEVEL`         | Logging level for the script. <b>This can only be configured using an environment variable.</b> Options: `DEBUG`, `INFO`, `WARN`, `ERROR`, `CRITICAL` | `WARN`                 |
+
+### Example Configuration Using Environment Variables
+```
+export CONFIG_FILE='config.yaml'
+export TAPPECUE_USER='my_user'
+export TAPPECUE_PASSWORD='my_password'
+export TAPPECUE_API_URL='https://tappecue.babyvelociraptor.com'
+export CHECK_PROBE_DELAY=30
+export NO_SESSION_DELAY=60
+export LOG_LEVEL='INFO'
+```
+
 See the [open issues](https://github.com/frbird/tappecue-prometheus/issues) for a full list of proposed features (and known issues). 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- CONTRIBUTING -->
 ## Contributing

@@ -16,5 +16,8 @@ COPY tappecue_monitor.py .
 # Set environment variables
 ENV CONFIG_FILE=config.yaml
 
+# Set file permissions
+RUN touch tappecue.log && chmod 755 tappecue.log
+
 # Command to run the application
 CMD ["python", "tappecue_monitor.py"]

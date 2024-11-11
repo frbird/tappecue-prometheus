@@ -1,12 +1,20 @@
 ---
-version: '3'
 services:
   tappecue-monitor:
-    image: ghcr.io/frbird/tappecue-prometheus:latest
+    # image: ghcr.io/frbird/tappecue-prometheus:latest
+    image: tappecue-monitor:latest
     ports:
       - 8000:8000
-    volumes:
-      - ./config.yaml:/app/config.yaml
+    # You can configure the app using environment variables or a config file.
+    environment:
+      - TAPPECUE_API_URL='https://tappecue.babyvelociraptor.com'
+      - TAPPECUE_USER='someuser@someuser.com'
+      - TAPPECUE_PASSWORD='123456'
+      - CHECK_PROBE_DELAY=3
+      - NO_SESSION_DELAY=300
+      - LOG_LEVEL='info'
+    # volumes:
+    #   - ./config.yaml:/app/config.yaml
     restart: unless-stopped
 
 # Add this to turn up a Grafana Agent container to scrape the metrics.
