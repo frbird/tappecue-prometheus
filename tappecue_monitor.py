@@ -1,3 +1,5 @@
+# TODO - update all the usage of the meesages function to use the logger object.  Specify a severity level for each message.
+
 """
 Tappecue Monitor
 This script monitors Tappecue sessions and retrieves probe data for active sessions.
@@ -29,7 +31,7 @@ Functions:
         Creates a Prometheus Gauge metric for Tappecue probe information.
     - update_gauges(metrics) -> None:
         Updates the Prometheus Gauges with the retrieved metrics.
-    - messages(m) -> None:
+    - messages(m, log_level) -> None:
         Logs messages to a file and stdout.
 Main Execution:
     - Loads configuration variables from the config.yaml file.
@@ -48,9 +50,26 @@ import yaml
 from prometheus_client import Gauge
 from prometheus_client import start_http_server
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+def setup_logger():
+    logger = logging.getLogger('tappecue')
+    log_level = os.getenv('LOG_LEVEL', 'WARN').upper()
+    logger.setLevel(log_level)
 
+    file_handler = logging.FileHandler(filename='tappecue.log')
+    file_handler.setLevel(log_level)
+    stdout_handler = logging.StreamHandler(stream=sys.stdout)
+    stdout_handler.setLevel(log_level)
+
+    formatter = logging.Formatter('[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+    stdout_handler.setFormatter(formatter)
+
+    if not logger.handlers:
+        logger.addHandler(file_handler)
+        logger.addHandler(stdout_handler)
+    
+    logger.info(f'Starting Tappecue Monitor.  Log level set to {log_level}.')
+    return logger
 
 # Loads variable from the YAML config file. This is currently looking for tappecue_config.yaml
 def load_vars(conf_file: str) -> dict:
@@ -58,11 +77,11 @@ def load_vars(conf_file: str) -> dict:
     try:
         with open(conf_file, 'r') as c:
             config = yaml.safe_load(c)
-        logging.info('Loaded config file.')
+        logger.info('Loaded config file.')
     except (FileNotFoundError, PermissionError) as e:
-        logging.error(f'Error reading config file {conf_file}: {e}. Please provide either a config file or set Environment variables.')
+        logger.error(f'Error reading config file {conf_file}: {e}. If Environment variables are set you can ignore this error.')
     except yaml.YAMLError as e:
-        logging.error(f'Error parsing YAML file: {e}.')
+        logger.error(f'Error parsing YAML file: {e}.')
 
     # Load API configuration variables
     try:
@@ -76,10 +95,8 @@ def load_vars(conf_file: str) -> dict:
         # Time in seconds to check for a new session.
         NO_SESSION_DELAY = int(os.getenv('NO_SESSION_DELAY', config.get('no_session_delay', 1200)))
 
-        # Set logging level
-        LOG_LEVEL = os.getenv('LOG_LEVEL', config.get('log_level', 'WARN'))
     except Exception as e:
-        logging.error(f'Error loading configuration variables: {e}')
+        logger.error(f'Error loading configuration variables: {e}')
 
     return {
         'user': USER,
@@ -87,7 +104,6 @@ def load_vars(conf_file: str) -> dict:
         'base_url': BASE_URL,
         'check_delay': CHECK_DELAY,
         'no_session_delay': NO_SESSION_DELAY,
-        'log_level': LOG_LEVEL
     }
 
 # Requires a URL, method and depending on the method headers or data.
@@ -102,7 +118,7 @@ def req(method: str, url: str, headers: dict = None, data: dict = None) -> reque
         response.raise_for_status()
         return response
     except requests.RequestException as e:
-        logging.error(f'HTTP request failed: {e}')
+        logger.error(f'HTTP request failed: {e}')
         raise
 
 # Authenticate to Tappecue API
@@ -116,13 +132,13 @@ def authenticate(u: str, p: str) -> dict:
         response = req(method='post', url=url, data=data)
         token = response.json()
         if response.status_code == 200:
-            logging.info('Authenticated to Tappecue API')
+            logger.info('Authenticated to Tappecue API')
             return token
         else:
-            logging.error('Authentication failed!')
+            logger.error('Authentication failed!')
             raise Exception(response.status_code)
     except Exception as e:
-        logging.error(f'Error authenticating to Tappecue: {e}')
+        logger.error(f'Error authenticating to Tappecue: {e}')
         sys.exit(1)
 
 # Returns any active Tappecue sessions
@@ -164,16 +180,15 @@ def get_data(token):
                 name = s['name']
                 pdata = getProbeData(token, id)
                 metrics.update(normalize_data(id, name, pdata))
-        messages('Got probe data')
+        logger.info('Got probe data')
         return metrics
     else:
         # Wait for a period of time before checking for an active session.  Default is 300 seconds (5 minutes).
         if config["no_session_delay"]:
-            messages('No active sessions found.  Will check again in %s seconds.' % config["no_session_delay"])
+            logger.info(f'No active sessions found.  Will check again in {config.get("no_session_delay")} seconds.')
             time.sleep(config["no_session_delay"])
         else:
-            messages('No active sessions found.  Will check again in %s seconds.' % '300')
-            time.sleep(300)
+            logger.error(f'No value set for {config["no_session_delay"]}.')
 
 # Creates a Prom metric of type Gauge with a name, description and 4 labels (names only).
 def create_gauges():
@@ -202,29 +217,19 @@ def update_gauges(metrics):
 
         # Delay metrics retrieval for 'CHECK_DELAY' seconds if that var is defined.  If not delay for 30 seconds.
         if config["check_delay"]:
-            messages(f'Successfully updated Grafana.  Sleeping for {config["check_delay"]} seconds.')
+            logger.info(f'Successfully updated Grafana.  Sleeping for {config["check_delay"]} seconds.')
             time.sleep(config["check_delay"])
         else:
-            sleep_time = 30
-            messages(f'Successfully updated Grafana.  Sleeping for {sleep_time} seconds.')
-            time.sleep(sleep_time)
-
-def messages(m):
-    file_handler = logging.FileHandler(filename='tappecue.log')
-    stdout_handler = logging.StreamHandler(stream=sys.stdout)
-    handlers = [file_handler, stdout_handler]
-    logging.basicConfig(
-        level=logging.DEBUG, 
-        format='[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s',
-        handlers=handlers
-    )
-    logger = logging.getLogger('tappecue')
-    logger.info(m)
+            logger.error(f'No value found for {config["check_delay"]}.')
 
 if __name__ == "__main__":
     # Initialize these vars so that "if" logic can be applied
     token = None
     temps = None
+
+    # Set the log level to the value in the config file or default to WARN.
+    logger = setup_logger()
+
     conf_file = os.getenv('CONFIG_FILE', 'config.yaml')
     config = load_vars(conf_file)
 
