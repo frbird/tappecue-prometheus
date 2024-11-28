@@ -3,9 +3,6 @@ name: Deploy Container
 on:
   registry_package:
     types: [published]
-    # packages:
-
-    #   - ghcr.io/${{ github.repository }}:latest
   workflow_dispatch:
 
 jobs:
@@ -17,9 +14,9 @@ jobs:
 
       - name: Deploy container
         run: |
-          TAPPECUE_PASSWORD={{ secrets.TAPPECUE_PASSWORD }}
-          TAPPECUE_USER={{ secrets.TAPPECUE_USER }}
-          VERIFY_SSL=False
           docker compose down
           docker compose pull
+          TAPPECUE_PASSWORD={{ secrets.TAPPECUE_PASSWORD }} \
+          TAPPECUE_USER={{ secrets.TAPPECUE_USER }} \
+          VERIFY_SSL=False \
           docker compose up -d
