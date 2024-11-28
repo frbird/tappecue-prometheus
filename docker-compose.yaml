@@ -7,7 +7,7 @@ services:
       - 8001:8000
     # You can configure the app using environment variables or a config file.
     environment:
-      - TAPPECUE_API_URL='https://tappecue.babyvelociraptor.com'
+      - TAPPECUE_API_URL=https://tappecue.babyvelociraptor.com
       - TAPPECUE_USER=${TAPPECUE_USER} # <-- This should be a string.
       - TAPPECUE_PASSWORD=${TAPPECUE_PASSWORD} # <-- This should be a string.
       - CHECK_PROBE_DELAY=3
