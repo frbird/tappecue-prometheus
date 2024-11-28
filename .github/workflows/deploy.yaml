@@ -13,10 +13,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy container
+        with:
+          tappecue_password: ${{ secrets.TAPPECUE_PASSWORD }}
+          tappecue_user: ${{ secrets.TAPPECUE_USER }}
         run: |
           docker compose down
           docker compose pull
-          TAPPECUE_PASSWORD={{ secrets.TAPPECUE_PASSWORD }} \
-          TAPPECUE_USER={{ secrets.TAPPECUE_USER }} \
+          TAPPECUE_PASSWORD="$tappecue_password" \
+          TAPPECUE_USER="$tappecue_user" \
           VERIFY_SSL=False \
           docker compose up -d
