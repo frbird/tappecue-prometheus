@@ -8,6 +8,10 @@ on:
       - '**/Dockerfile'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.sha }}
+  cancel-in-progress: true
+
 jobs:
 
   build:
