@@ -26,7 +26,6 @@ jobs:
         env:
           TAPPECUE_PASSWORD: ${{ secrets.TAPPECUE_PASSWORD }}
           TAPPECUE_USER: ${{ secrets.TAPPECUE_USER }}
-          VERIFY_SSL: False
         run: |
           docker compose down
           docker compose pull
