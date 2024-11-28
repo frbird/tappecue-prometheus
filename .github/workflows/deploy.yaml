@@ -1,6 +1,10 @@
 name: Deploy Container
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**/docker-compose.yaml'
   registry_package:
     types: [published]
   workflow_dispatch:
