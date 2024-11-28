@@ -1,0 +1,23 @@
+name: Deploy Container
+
+on:
+  registry_package:
+    types: [published]
+    packages:
+      - ghcr.io/${{ github.repository }}:latest
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy container
+        run: |
+          TAPPECUE_PASSWORD={{ secrets.TAPPECUE_PASSWORD }}
+          TAPPECUE_USER={{ secrets.TAPPECUE_USER }}
+          VERIFY_SSL=False
+          docker compose down
+          docker compose pull
+          docker compose up -d

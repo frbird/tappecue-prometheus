@@ -1,8 +1,8 @@
 ---
 services:
   tappecue-monitor:
-    # image: ghcr.io/frbird/tappecue-prometheus:latest
-    image: tappecue-monitor:latest
+    image: ghcr.io/frbird/tappecue-prometheus:latest
+    # image: tappecue-monitor:latest
     ports:
       - 8000:8000
     # You can configure the app using environment variables or a config file.
@@ -12,6 +12,7 @@ services:
       - TAPPECUE_PASSWORD='123456'
       - CHECK_PROBE_DELAY=3
       - NO_SESSION_DELAY=300
+      - VERIFY_SSL=False
       - LOG_LEVEL='info'
     # volumes:
     #   - ./config.yaml:/app/config.yaml
