@@ -197,6 +197,7 @@ If you choose to use a config file an example is included in to the repo ```conf
 | `TAPPECUE_API_URL`  | Base URL for the Tappecue API.                                               | `https://tappecue.babyvelociraptor.com`|
 | `CHECK_PROBE_DELAY` | Time in seconds between temperature checks.                                  | `60`                   |
 | `NO_SESSION_DELAY`  | Time in seconds to wait before checking for a new session if none is active. | `1200`                   |
+| `VERIFY_SSL`        | Disable SSL check for Tappecue API. This is a boolean (True / False).        | `True`                 |
 | `LOG_LEVEL`         | Logging level for the script. <b>This can only be configured using an environment variable.</b> Options: `DEBUG`, `INFO`, `WARN`, `ERROR`, `CRITICAL` | `WARN`                 |
 
 ### Example Configuration Using Environment Variables
@@ -207,6 +208,7 @@ export TAPPECUE_PASSWORD='my_password'
 export TAPPECUE_API_URL='https://tappecue.babyvelociraptor.com'
 export CHECK_PROBE_DELAY=30
 export NO_SESSION_DELAY=60
+export VERIFY_SSL=False
 export LOG_LEVEL='INFO'
 ```
 

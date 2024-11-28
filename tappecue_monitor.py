@@ -89,6 +89,9 @@ def load_vars(conf_file: str) -> dict:
         # Time in seconds to check for a new session.
         NO_SESSION_DELAY = int(os.getenv('NO_SESSION_DELAY', config.get('no_session_delay', 1200)))
 
+        # Disable SSL verification if set to False.
+        VERIFY_SSL = os.getenv('VERIFY_SSL', config.get('verify_ssl', True))
+
     except Exception as e:
         logger.error(f'Error loading configuration variables: {e}')
 
@@ -98,15 +101,16 @@ def load_vars(conf_file: str) -> dict:
         'base_url': BASE_URL,
         'check_delay': CHECK_DELAY,
         'no_session_delay': NO_SESSION_DELAY,
+        'verify_ssl': VERIFY_SSL
     }
 
 # Requires a URL, method and depending on the method headers or data.
-def req(method: str, url: str, headers: dict = None, data: dict = None) -> requests.Response:
+def req(method: str, url: str, headers: dict = None, data: dict = None, verify: bool = True) -> requests.Response:
     try:
         if method.lower() == 'post':
-            response = requests.post(url, data=data)
+            response = requests.post(url, data=data, verify=verify)
         elif method.lower() == 'get':
-            response = requests.get(url, headers=headers)
+            response = requests.get(url, headers=headers, verify=verify)
         else:
             raise ValueError(f'Unsupported method: {method}')
         response.raise_for_status()
@@ -123,7 +127,7 @@ def authenticate(u: str, p: str) -> dict:
             'username': u,
             'password': p
         }
-        response = req(method='post', url=url, data=data)
+        response = req(method='post', url=url, data=data, verify=config["verify_ssl"])
         token = response.json()
         if response.status_code == 200:
             logger.info('Authenticated to Tappecue API')
@@ -139,14 +143,14 @@ def authenticate(u: str, p: str) -> dict:
 def getSession(token: dict) -> dict:
     headers = token
     url = f'{config["base_url"]}/sessions'
-    response = req(method='get', url=url, headers=headers)
+    response = req(method='get', url=url, headers=headers, verify=config["verify_ssl"])
     return response.json()
 
 # Pulls probe data for the given session
 def getProbeData(token: dict, id: str) -> dict:
     headers = token
     url = f'{config["base_url"]}/session/{id}'
-    response = req(method='get', url=url, headers=headers)
+    response = req(method='get', url=url, headers=headers, verify=config["verify_ssl"])
     return response.json()
 
 # Creates a nested Dictionary with the session information and the probes data.
