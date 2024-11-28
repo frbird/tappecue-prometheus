@@ -106,6 +106,7 @@ def load_vars(conf_file: str) -> dict:
 
 # Requires a URL, method and depending on the method headers or data.
 def req(method: str, url: str, headers: dict = None, data: dict = None, verify: bool = True) -> requests.Response:
+    logger.debug(f'Request info:\nurl: {url}\nmethod: {method}\nheaders: {headers}\ndata: {data}\nverify: {verify}')
     try:
         if method.lower() == 'post':
             response = requests.post(url, data=data, verify=verify)
