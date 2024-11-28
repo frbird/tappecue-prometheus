@@ -8,11 +8,11 @@ services:
     # You can configure the app using environment variables or a config file.
     environment:
       - TAPPECUE_API_URL='https://tappecue.babyvelociraptor.com'
-      - TAPPECUE_USER='someuser@someuser.com'
-      - TAPPECUE_PASSWORD='123456'
+      - TAPPECUE_USER=${TAPPECUE_USER} # <-- This should be a string.
+      - TAPPECUE_PASSWORD=${TAPPECUE_PASSWORD} # <-- This should be a string.
       - CHECK_PROBE_DELAY=3
       - NO_SESSION_DELAY=300
-      - VERIFY_SSL=False
+      - VERIFY_SSL=${VERIFY_SSL} # <-- This should be a bool.
       - LOG_LEVEL=info
     # volumes:
     #   - ./config.yaml:/app/config.yaml
