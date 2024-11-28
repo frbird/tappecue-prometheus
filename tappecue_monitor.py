@@ -90,7 +90,12 @@ def load_vars(conf_file: str) -> dict:
         NO_SESSION_DELAY = int(os.getenv('NO_SESSION_DELAY', config.get('no_session_delay', 1200)))
 
         # Disable SSL verification if set to False.
-        VERIFY_SSL = bool(os.getenv('VERIFY_SSL', config.get('verify_ssl', True)))
+        VERIFY_SSL = None
+        ssl_check = os.getenv('VERIFY_SSL', config.get('verify_ssl')).lower()
+        if ssl_check.lower() in ['false', 'no', 'off', '0']:
+            VERIFY_SSL = False
+        else:
+            VERIFY_SSL = True
 
     except Exception as e:
         logger.error(f'Error loading configuration variables: {e}')
@@ -105,7 +110,7 @@ def load_vars(conf_file: str) -> dict:
     }
 
 # Requires a URL, method and depending on the method headers or data.
-def req(method: str, url: str, headers: dict = None, data: dict = None, verify: bool = True) -> requests.Response:
+def req(method: str, url: str, headers: dict = None, data: dict = None, verify=None) -> requests.Response:
     logger.debug(f'Request info:\nurl: {url}\nmethod: {method}\nheaders: {headers}\ndata: {data}\nverify: {verify}\n')
     try:
         if method.lower() == 'post':
