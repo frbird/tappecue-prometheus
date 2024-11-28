@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image Build and Push
 
 on:
   push:
@@ -28,12 +28,10 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
-        # context: .
-        # file: ./Dockerfile
         push: true
         tags: |
-          ghcr.io/${{ github.repository }}/tappecue-monitor:latest
-          ghcr.io/${{ github.repository }}/tappecue-monitor:${{ github.ref_name }}
+          ghcr.io/${{ github.repository }}:latest
+          ghcr.io/${{ github.repository }}:${{ github.ref_name }}
 
 # The code below has been replace by the code above.  Delete this code after testing the new code.
     # - name: Checkout code
