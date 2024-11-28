@@ -51,7 +51,7 @@ from prometheus_client import Gauge
 from prometheus_client import start_http_server
 
 # Configure a logger with a default level of 'INFO'.
-log_level = os.getenv('LOG_LEVEL', 'INFO')
+log_level = os.getenv('LOG_LEVEL', 'INFO').upper()
 logger = logging.getLogger(__name__)
 logger.setLevel(log_level)
 
