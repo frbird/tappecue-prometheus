@@ -5,6 +5,7 @@ on:
     types: [published]
     packages:
       - ghcr.io/${{ github.repository }}:latest
+  workflow_dispatch:
 
 jobs:
   deploy:
