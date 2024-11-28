@@ -11,10 +11,6 @@ on:
       - ghcr.io/frbird/tappecue-prometheus:latest
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.sha }}
-  cancel-in-progress: true
-
 jobs:
   deploy:
     runs-on: self-hosted
