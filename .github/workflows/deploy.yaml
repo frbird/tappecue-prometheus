@@ -3,8 +3,9 @@ name: Deploy Container
 on:
   registry_package:
     types: [published]
-    packages:
-      - ghcr.io/${{ github.repository }}:latest
+    # packages:
+
+    #   - ghcr.io/${{ github.repository }}:latest
   workflow_dispatch:
 
 jobs:
