@@ -239,3 +239,5 @@ if __name__ == "__main__":
         if not temps:
             temps = create_gauges()
         update_gauges(get_data(token))
+
+# Testing CI/CD pipeline
