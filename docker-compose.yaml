@@ -4,7 +4,7 @@ services:
     image: ghcr.io/frbird/tappecue-prometheus:latest
     # image: tappecue-monitor:latest
     ports:
-      - 8000:8000
+      - 8001:8000
     # You can configure the app using environment variables or a config file.
     environment:
       - TAPPECUE_API_URL='https://tappecue.babyvelociraptor.com'
