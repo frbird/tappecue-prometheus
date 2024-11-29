@@ -1,7 +1,6 @@
 config.yaml
 *.log
 .venv
-__pycache__/
+__pycache__
 
 .vscode/settings.json
-__pycache__/tappecue_monitor.cpython-39.pyc
