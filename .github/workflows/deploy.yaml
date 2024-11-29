@@ -8,7 +8,7 @@ on:
   registry_package:
     types: [published]
     tags:
-      - ghcr.io/frbird/tappecue-prometheus:latest
+      - latest
   workflow_dispatch:
 
 jobs:
