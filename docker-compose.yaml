@@ -8,6 +8,7 @@ services:
     # You can configure the app using environment variables or a config file.
     environment:
       - TAPPECUE_API_URL=https://tappecue.babyvelociraptor.com
+      - WEBHOOK_URL=http://10.128.2.70/ws/bbq
       - TAPPECUE_USER=${TAPPECUE_USER} # <-- This should be a string.
       - TAPPECUE_PASSWORD=${TAPPECUE_PASSWORD} # <-- This should be a string.
       - CHECK_PROBE_DELAY=3

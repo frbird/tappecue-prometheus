@@ -1,4 +1,4 @@
-# TODO - update all the usage of the meesages function to use the logger object.  Specify a severity level for each message.
+# TODO - Test Webhook function.
 
 """
 Tappecue Monitor
@@ -23,6 +23,8 @@ Functions:
         Retrieves information about active Tappecue sessions.
     - getProbeData(token: dict, id: str) -> dict:
         Retrieves probe data for a specific Tappecue session.
+    - sendWebhook(message: str):
+        Sends a webhook POST to the specified URL in the "webhook_url" variable with the data in the message variable.
     - normalize_data(sess_id, sess_name, pdata) -> dict:
         Creates a nested dictionary with session information and probe data.
     - get_data(token) -> dict:
@@ -82,6 +84,7 @@ def load_vars(conf_file: str) -> dict:
         USER = os.getenv('TAPPECUE_USER', config.get('tappecue_user'))
         PSWD = os.getenv('TAPPECUE_PASSWORD', config.get('tappecue_password'))
         BASE_URL = os.getenv('TAPPECUE_API_URL', config.get('tappecue_api_url', 'https://tappecue.babyvelociraptor.com'))
+        WEBHOOK_URL = os.getenv('WEBHOOK_URL', config.get('webhook_url'))
 
         # Time in seconds between temp checks.
         CHECK_DELAY = int(os.getenv('CHECK_PROBE_DELAY', config.get('check_probe_delay', 60)))
@@ -104,6 +107,7 @@ def load_vars(conf_file: str) -> dict:
         'user': USER,
         'password': PSWD,
         'base_url': BASE_URL,
+        'webhook_url': WEBHOOK_URL,
         'check_delay': CHECK_DELAY,
         'no_session_delay': NO_SESSION_DELAY,
         'verify_ssl': VERIFY_SSL
@@ -159,6 +163,16 @@ def getProbeData(token: dict, id: str) -> dict:
     response = req(method='get', url=url, headers=headers, verify=config["verify_ssl"])
     return response.json()
 
+def sendWebhook(message: str):
+    url = config["webhook_url"]
+
+    data = {
+        'message': message
+    }
+
+    requests.post(url, json=data)
+    logger.info(f'Webhook sent.  URL: {url}, Data: {message}')
+
 # Creates a nested Dictionary with the session information and the probes data.
 def normalize_data(sess_id, sess_name, pdata):
     metrics = {
@@ -177,6 +191,7 @@ def normalize_data(sess_id, sess_name, pdata):
 def get_data(token):
     session = getSession(token)
     if session:
+        sendWebhook("Active cookout detected!")
         metrics = {}
         for s in session:
             if s['active'] == '1':
